@@ -1,0 +1,7 @@
+{
+	"variants": {
+		"type=bottom": { "model": "dirt-slab-justfatlard:block/farmland_slab" },
+		"type=top": { "model": "dirt-slab-justfatlard:block/farmland_slab_top" },
+		"type=double": { "model": "minecraft:block/farmland" }
+	}
+}

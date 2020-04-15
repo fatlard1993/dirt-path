@@ -1,0 +1,26 @@
+{
+	"_jsonFile": true,
+	"schemaVersion": 1,
+	"id": "dirt-slab-justfatlard",
+	"version": "0.0.1",
+	"name": "Dirt Slab",
+	"description": "A partial function half dirt block",
+	"authors": ["justfatlard"],
+	"contact": {
+		"sources": "https://github.com/fatlard1993/dirt-slab"
+	},
+	"license": "MIT",
+	"icon": "assets/dirt-slab-justfatlard/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": ["justfatlard.dirt_slab.Main"]
+	},
+	"depends": {
+		"fabricloader": ">=0.7.4",
+		"fabric": "*",
+		"minecraft": "1.15.x"
+	},
+	"suggests": {
+		"flamingo": "*"
+	}
+}

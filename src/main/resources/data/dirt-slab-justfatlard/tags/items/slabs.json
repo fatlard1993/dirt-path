@@ -1,0 +1,10 @@
+{
+  "replace": false,
+	"values": [
+		"dirt-slab-justfatlard:block/dirt_slab",
+		"dirt-slab-justfatlard:block/coarse_dirt_slab",
+		"dirt-slab-justfatlard:farmland_slab",
+		"dirt-slab-justfatlard:block/grass_path_slab",
+		"dirt-slab-justfatlard:block/grass_slab"
+	]
+}
