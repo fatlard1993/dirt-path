@@ -1,5 +1,5 @@
 {
-	"parent": "minecraft:block/slab_top",
+	"parent": "block/slab_top",
 	"textures": {
 		"particle": "minecraft:block/dirt",
 		"bottom": "minecraft:block/dirt",
