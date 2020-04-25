@@ -2,6 +2,6 @@
 	"variants": {
 		"type=bottom": { "model": "dirt-slab-justfatlard:block/dirt_slab" },
 		"type=top": { "model": "dirt-slab-justfatlard:block/dirt_slab_top" },
-		"type=double": { "model": "minecraft:block/dirt" }
+		"type=double": { "model": "block/dirt" }
 	}
 }

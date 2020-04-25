@@ -1,9 +1,9 @@
 {
 	"parent": "block/slab_top",
 	"textures": {
-		"particle": "minecraft:block/dirt",
-		"dirt": "minecraft:block/dirt",
-		"top": "minecraft:block/farmland_moist"
+		"particle": "block/dirt",
+		"dirt": "block/dirt",
+		"top": "block/farmland_moist"
 	},
 	"elements": [
 		{

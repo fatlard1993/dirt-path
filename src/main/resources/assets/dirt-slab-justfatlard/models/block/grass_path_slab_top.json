@@ -1,10 +1,10 @@
 {
 	"parent": "block/slab_top",
 	"textures": {
-		"particle": "minecraft:block/dirt",
-		"bottom": "minecraft:block/dirt",
-		"top": "minecraft:block/grass_path_top",
-		"side": "minecraft:block/grass_path_side"
+		"particle": "block/dirt",
+		"bottom": "block/dirt",
+		"top": "block/grass_path_top",
+		"side": "block/grass_path_side"
 	},
 	"elements": [
 		{
