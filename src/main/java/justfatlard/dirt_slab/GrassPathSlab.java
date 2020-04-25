@@ -26,20 +26,20 @@ public class GrassPathSlab extends SlabBlock {
 	protected static final VoxelShape BOTTOM_SHAPE;
 	protected static final VoxelShape DOUBLE_SHAPE;
 
-	protected GrassPathSlab(Block.Settings settings) {
+	protected GrassPathSlab(Block.Settings settings){
 		super(settings);
 	}
 
 	@Override
-	public boolean hasSidedTransparency(BlockState state) {
+	public boolean hasSidedTransparency(BlockState state){
 		return true;
 	}
 
 	@Override
-	public VoxelShape getOutlineShape(BlockState state, BlockView view, BlockPos pos, EntityContext context) {
+	public VoxelShape getOutlineShape(BlockState state, BlockView view, BlockPos pos, EntityContext context){
 		SlabType slabType = (SlabType)state.get(TYPE);
 
-		switch(slabType) {
+		switch(slabType){
 			case DOUBLE:
 				return DOUBLE_SHAPE;
 			case TOP:
@@ -49,42 +49,42 @@ public class GrassPathSlab extends SlabBlock {
 		}
 	}
 
-	public BlockState getPlacementState(ItemPlacementContext ctx) {
+	public BlockState getPlacementState(ItemPlacementContext ctx){
 		return !this.getDefaultState().canPlaceAt(ctx.getWorld(), ctx.getBlockPos()) ? Block.pushEntitiesUpBeforeBlockChange(this.getDefaultState(), Main.DIRT_SLAB.getDefaultState(), ctx.getWorld(), ctx.getBlockPos()) : super.getPlacementState(ctx);
 	}
 
-	public BlockState getStateForNeighborUpdate(BlockState state, Direction facing, BlockState neighborState, IWorld world, BlockPos pos, BlockPos neighborPos) {
-		if (facing == Direction.UP && !state.canPlaceAt(world, pos)) {
+	public BlockState getStateForNeighborUpdate(BlockState state, Direction facing, BlockState neighborState, IWorld world, BlockPos pos, BlockPos neighborPos){
+		if (facing == Direction.UP && !state.canPlaceAt(world, pos)){
 			world.getBlockTickScheduler().schedule(pos, this, 1);
 		}
 
 		return super.getStateForNeighborUpdate(state, facing, neighborState, world, pos, neighborPos);
 	}
 
-	public void scheduledTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
+	public void scheduledTick(BlockState state, ServerWorld world, BlockPos pos, Random random){
 		setToDirt(state, world, pos);
 	}
 
-	public static void setToDirt(BlockState state, World world, BlockPos pos) {
+	public static void setToDirt(BlockState state, World world, BlockPos pos){
 		world.setBlockState(pos, pushEntitiesUpBeforeBlockChange(state, Main.DIRT_SLAB.getDefaultState(), world, pos));
 	}
 
-	public boolean canPlaceAt(BlockState state, WorldView world, BlockPos pos) {
+	public boolean canPlaceAt(BlockState state, WorldView world, BlockPos pos){
 		BlockState blockState = world.getBlockState(pos.up());
 		return !blockState.getMaterial().isSolid() || blockState.getBlock() instanceof FenceGateBlock;
 	}
 
-	public boolean canPlaceAtSide(BlockState world, BlockView view, BlockPos pos, BlockPlacementEnvironment env) {
+	public boolean canPlaceAtSide(BlockState world, BlockView view, BlockPos pos, BlockPlacementEnvironment env){
 		return false;
 	}
 
 	@Environment(EnvType.CLIENT)
-	public boolean hasInWallOverlay(BlockState state, BlockView view, BlockPos pos) {
+	public boolean hasInWallOverlay(BlockState state, BlockView view, BlockPos pos){
 		return true;
 	}
 
 	static {
-		TOP_SHAPE = Block.createCuboidShape(0.0D, 8.0D, 0.0D, 16.0D, 15.0D, 16.0D);
+		TOP_SHAPE = Block.createCuboidShape(0.0D, 7.0D, 0.0D, 16.0D, 15.0D, 16.0D);
 		BOTTOM_SHAPE = Block.createCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 7.0D, 16.0D);
 		DOUBLE_SHAPE = Block.createCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 15.0D, 16.0D);
 	}

@@ -28,7 +28,6 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockPlacementEnvironment;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.CropBlock;
-import net.minecraft.block.FarmlandBlock;
 import net.minecraft.block.FenceGateBlock;
 import net.minecraft.block.PistonExtensionBlock;
 import net.minecraft.block.SlabBlock;
@@ -151,7 +150,7 @@ public class FarmlandSlab extends SlabBlock {
 
 	static {
 		MOISTURE = Properties.MOISTURE;
-		TOP_SHAPE = Block.createCuboidShape(0.0D, 8.0D, 0.0D, 16.0D, 15.0D, 16.0D);
+		TOP_SHAPE = Block.createCuboidShape(0.0D, 7.0D, 0.0D, 16.0D, 15.0D, 16.0D);
 		BOTTOM_SHAPE = Block.createCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 7.0D, 16.0D);
 		DOUBLE_SHAPE = Block.createCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 15.0D, 16.0D);
 	}
