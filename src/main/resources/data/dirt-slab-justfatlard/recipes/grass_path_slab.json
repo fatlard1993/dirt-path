@@ -1,13 +1,9 @@
 {
   "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "###",
-    "#X#",
-    "###"
-  ],
-  "key": {
-    "#": { "item": "dirt-slab-justfatlard:dirt_slab" },
-    "X": { "item": "minecraft:iron_shovel" }
-  },
-  "result": { "item": "dirt-slab-justfatlard:grass_path_slab", "count": 8 }
+  "pattern": ["###"],
+  "key": { "#": { "item": "minecraft:grass_path" } },
+  "result": {
+    "item": "dirt-slab-justfatlard:grass_path_slab",
+    "count": 6
+  }
 }
