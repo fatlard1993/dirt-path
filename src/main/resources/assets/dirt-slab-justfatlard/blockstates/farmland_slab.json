@@ -2,6 +2,9 @@
 	"variants": {
 		"type=bottom": { "model": "dirt-slab-justfatlard:block/farmland_slab" },
 		"type=top": { "model": "dirt-slab-justfatlard:block/farmland_slab_top" },
-		"type=double": { "model": "block/farmland" }
+		"type=double": { "model": "block/farmland" },
+		"type=bottom,moisture=7": { "model": "dirt-slab-justfatlard:block/farmland_slab_moist" },
+		"type=top,moisture=7": { "model": "dirt-slab-justfatlard:block/farmland_slab_top_moist" },
+		"type=double,moisture=7": { "model": "block/farmland_moist" }
 	}
 }
