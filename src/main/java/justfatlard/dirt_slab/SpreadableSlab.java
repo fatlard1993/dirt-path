@@ -15,6 +15,7 @@ import net.minecraft.world.World;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.SnowBlock;
+import net.minecraft.block.enums.SlabType;
 import net.minecraft.world.WorldView;
 import net.minecraft.world.chunk.light.ChunkLightProvider;
 import net.minecraft.block.SlabBlock;
@@ -43,7 +44,9 @@ public class SpreadableSlab extends SlabBlock {
 		BlockPos blockPos = pos.up();
 		BlockState topBlock = worldView.getBlockState(blockPos);
 
-		if(topBlock.getBlock() == Blocks.SNOW && (Integer)topBlock.get(SnowBlock.LAYERS) == 1) return true;
+		if((state.getBlock() == Main.GRASS_SLAB || state.getBlock() == Main.MYCELIUM_SLAB) && state.get(WATERLOGGED) == true && state.get(TYPE) == SlabType.BOTTOM) return false;
+
+		else if(topBlock.getBlock() == Blocks.SNOW && (Integer)topBlock.get(SnowBlock.LAYERS) == 1) return true;
 
 		else {
 			int i = ChunkLightProvider.getRealisticOpacity(worldView, state, pos, topBlock, blockPos, Direction.UP, topBlock.getOpacity(worldView, blockPos));

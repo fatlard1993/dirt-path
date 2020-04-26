@@ -1,0 +1,7 @@
+{
+	"variants": {
+		"type=bottom": { "model": "dirt-slab-justfatlard:block/mycelium_slab" },
+		"type=top": { "model": "dirt-slab-justfatlard:block/mycelium_slab_top" },
+		"type=double": { "model": "block/mycelium" }
+	}
+}

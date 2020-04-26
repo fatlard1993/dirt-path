@@ -1,0 +1,16 @@
+{
+  "required": true,
+	"package": "justfatlard.dirt_slab.mixins",
+  "minVersion": "0.8",
+  "compatibilityLevel": "JAVA_8",
+  "mixins": [],
+  "client": [
+    "CropMixin",
+    "HoeMixin",
+    "MushroomPlantMixin",
+    "PlantMixin",
+		"ShovelMixin",
+		"SpreadableBlockMixin"
+  ],
+  "injectors": { "defaultRequire": 1 }
+}
