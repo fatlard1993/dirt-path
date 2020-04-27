@@ -8,9 +8,9 @@ import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.SlabBlock;
-import net.minecraft.item.ItemStack;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.item.ItemStack;
 import net.minecraft.client.color.block.BlockColorProvider;
 import net.minecraft.client.color.item.ItemColorProvider;
 import net.minecraft.client.color.world.BiomeColors;
@@ -29,6 +29,8 @@ public class Main implements ModInitializer, ClientModInitializer {
 
 	@Override
 	public void onInitializeClient() {
+		// ColorProviderRegistry.BLOCK.register((state, view, pos, tintIndex) -> 0x3495eb, DirtSlabBlocks.GRASS_SLAB);
+
 		ColorProviderRegistry.BLOCK.register(new BlockColorProvider(){
 			@Override
 			public int getColor(BlockState state, BlockRenderView view, BlockPos pos, int tintIndex){

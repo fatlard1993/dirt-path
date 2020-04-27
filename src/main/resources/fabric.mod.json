@@ -13,7 +13,8 @@
 	"icon": "assets/dirt-slab-justfatlard/icon.png",
 	"environment": "*",
 	"entrypoints": {
-		"main": ["justfatlard.dirt_slab.Main"]
+		"main": ["justfatlard.dirt_slab.Main"],
+		"client": ["justfatlard.dirt_slab.Main"]
 	},
 	"mixins": ["dirt-slab-justfatlard.mixins.json"],
 	"depends": {

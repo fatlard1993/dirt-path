@@ -25,5 +25,4 @@ Possible future features:
 
 
 should get a slab back when converting from block to slab
-grass slab is grey
 grass spreads to waterlogged slabs
