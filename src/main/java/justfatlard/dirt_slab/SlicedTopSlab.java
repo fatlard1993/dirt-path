@@ -15,7 +15,6 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.IWorld;
-import net.minecraft.world.World;
 import net.minecraft.block.SlabBlock;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -58,7 +57,7 @@ public class SlicedTopSlab extends SlabBlock {
 	public boolean canPlaceAt(BlockState state, WorldView world, BlockPos pos){
 		BlockState upState = world.getBlockState(pos.up());
 
-		return state.get(TYPE) != SlabType.BOTTOM && (!upState.getMaterial().isSolid() || upState.getBlock() instanceof FenceGateBlock || upState.getBlock() instanceof PistonExtensionBlock);
+		return (state.get(TYPE) == SlabType.BOTTOM || (upState.getBlock() instanceof SlabBlock && upState.get(TYPE) == SlabType.TOP) || !upState.getMaterial().isSolid() || upState.getBlock() instanceof FenceGateBlock || upState.getBlock() instanceof PistonExtensionBlock);
 	}
 
 	public boolean canPlaceAtSide(BlockState world, BlockView view, BlockPos pos, BlockPlacementEnvironment env){ return false; }
@@ -73,7 +72,7 @@ public class SlicedTopSlab extends SlabBlock {
 		return super.getStateForNeighborUpdate(state, facing, neighborState, world, pos, neighborPos);
 	}
 
-	public void scheduledTick(BlockState state, ServerWorld world, BlockPos pos, Random random){ Main.setToDirt(state, world, pos); }
+	public void scheduledTick(BlockState state, ServerWorld world, BlockPos pos, Random random){ Main.setToDirt(world, pos); }
 
 	static {
 		TOP_SHAPE = Block.createCuboidShape(0.0D, 7.0D, 0.0D, 16.0D, 15.0D, 16.0D);
