@@ -56,15 +56,15 @@ public class SlicedTopSlab extends SlabBlock {
 	}
 
 	public boolean canPlaceAt(BlockState state, WorldView world, BlockPos pos){
-		BlockState blockState = world.getBlockState(pos.up());
+		BlockState upState = world.getBlockState(pos.up());
 
-		return !blockState.getMaterial().isSolid() || blockState.getBlock() instanceof FenceGateBlock || blockState.getBlock() instanceof PistonExtensionBlock;
+		return state.get(TYPE) != SlabType.BOTTOM && (!upState.getMaterial().isSolid() || upState.getBlock() instanceof FenceGateBlock || upState.getBlock() instanceof PistonExtensionBlock);
 	}
 
 	public boolean canPlaceAtSide(BlockState world, BlockView view, BlockPos pos, BlockPlacementEnvironment env){ return false; }
 
 	public BlockState getPlacementState(ItemPlacementContext ctx){
-		return !this.getDefaultState().canPlaceAt(ctx.getWorld(), ctx.getBlockPos()) ? Block.pushEntitiesUpBeforeBlockChange(this.getDefaultState(), DirtSlabBlocks.DIRT_SLAB.getDefaultState(), ctx.getWorld(), ctx.getBlockPos()) : super.getPlacementState(ctx);
+		return !this.getDefaultState().canPlaceAt(ctx.getWorld(), ctx.getBlockPos()) ? pushEntitiesUpBeforeBlockChange(this.getDefaultState(), DirtSlabBlocks.DIRT_SLAB.getDefaultState(), ctx.getWorld(), ctx.getBlockPos()) : super.getPlacementState(ctx);
 	}
 
 	public BlockState getStateForNeighborUpdate(BlockState state, Direction facing, BlockState neighborState, IWorld world, BlockPos pos, BlockPos neighborPos){
@@ -73,11 +73,7 @@ public class SlicedTopSlab extends SlabBlock {
 		return super.getStateForNeighborUpdate(state, facing, neighborState, world, pos, neighborPos);
 	}
 
-	public void scheduledTick(BlockState state, ServerWorld world, BlockPos pos, Random random){ setToDirt(state, world, pos); }
-
-	public static void setToDirt(BlockState state, World world, BlockPos pos){
-		world.setBlockState(pos, pushEntitiesUpBeforeBlockChange(state, DirtSlabBlocks.DIRT_SLAB.getDefaultState().with(SlabBlock.TYPE, state.get(SlabBlock.TYPE)).with(SlabBlock.WATERLOGGED, state.get(SlabBlock.WATERLOGGED)), world, pos));
-	}
+	public void scheduledTick(BlockState state, ServerWorld world, BlockPos pos, Random random){ Main.setToDirt(state, world, pos); }
 
 	static {
 		TOP_SHAPE = Block.createCuboidShape(0.0D, 7.0D, 0.0D, 16.0D, 15.0D, 16.0D);

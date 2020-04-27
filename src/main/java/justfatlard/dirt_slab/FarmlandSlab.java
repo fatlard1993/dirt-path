@@ -42,7 +42,7 @@ public class FarmlandSlab extends SlicedTopSlab {
 
 	@Override
 	public void scheduledTick(BlockState state, ServerWorld world, BlockPos pos, Random random){
-		if(!state.canPlaceAt(world, pos)) setToDirt(state, world, pos);
+		if(!state.canPlaceAt(world, pos)) Main.setToDirt(state, world, pos);
 
 		else {
 			int moisture = (Integer)state.get(MOISTURE);
@@ -50,7 +50,7 @@ public class FarmlandSlab extends SlicedTopSlab {
 			if(!isWaterNearby(world, pos) && !world.hasRain(pos.up())){
 				if(moisture > 0) world.setBlockState(pos, (BlockState)state.with(TYPE, state.get(TYPE)).with(WATERLOGGED, state.get(WATERLOGGED)).with(MOISTURE, moisture - 1), 2);
 
-				else if(!hasCrop(world, pos)) setToDirt(state, world, pos);
+				else if(!hasCrop(world, pos)) Main.setToDirt(state, world, pos);
 			}
 
 			else if(moisture < 7){
@@ -61,7 +61,7 @@ public class FarmlandSlab extends SlicedTopSlab {
 
 	public void onLandedUpon(World world, BlockPos pos, Entity entity, float distance){
 		if(!world.isClient && world.random.nextFloat() < distance - 0.5F && entity instanceof LivingEntity && (entity instanceof PlayerEntity || world.getGameRules().getBoolean(GameRules.MOB_GRIEFING)) && entity.getWidth() * entity.getWidth() * entity.getHeight() > 0.512F){
-			setToDirt(world.getBlockState(pos), world, pos);
+			Main.setToDirt(world.getBlockState(pos), world, pos);
 		}
 
 		super.onLandedUpon(world, pos, entity, distance);

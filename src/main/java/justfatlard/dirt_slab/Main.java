@@ -5,6 +5,7 @@ import java.util.Random;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry;
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.SlabBlock;
@@ -16,6 +17,7 @@ import net.minecraft.client.color.item.ItemColorProvider;
 import net.minecraft.client.color.world.BiomeColors;
 import net.minecraft.client.color.world.GrassColors;
 import net.minecraft.world.BlockRenderView;
+import net.minecraft.world.World;
 
 public class Main implements ModInitializer, ClientModInitializer {
 	public static final String MOD_ID = "dirt-slab-justfatlard";
@@ -29,8 +31,6 @@ public class Main implements ModInitializer, ClientModInitializer {
 
 	@Override
 	public void onInitializeClient() {
-		// ColorProviderRegistry.BLOCK.register((state, view, pos, tintIndex) -> 0x3495eb, DirtSlabBlocks.GRASS_SLAB);
-
 		ColorProviderRegistry.BLOCK.register(new BlockColorProvider(){
 			@Override
 			public int getColor(BlockState state, BlockRenderView view, BlockPos pos, int tintIndex){
@@ -46,7 +46,11 @@ public class Main implements ModInitializer, ClientModInitializer {
 		}, DirtSlabBlocks.GRASS_SLAB);
 	}
 
-	public static void spreadableTick(BlockState spreader, ServerWorld world, BlockPos pos, Random random){
+	public static void setToDirt(BlockState state, World world, BlockPos pos){
+		world.setBlockState(pos, Block.pushEntitiesUpBeforeBlockChange(state, DirtSlabBlocks.DIRT_SLAB.getDefaultState().with(SlabBlock.TYPE, state.get(SlabBlock.TYPE)).with(SlabBlock.WATERLOGGED, state.get(SlabBlock.WATERLOGGED)), world, pos));
+	}
+
+	public static void spreadableTick(BlockState spreader, ServerWorld world, BlockPos pos, Random random) {
 		if(world.getLightLevel(pos.up()) >= 9){
 			for(int x = 0; x < 4; ++x){
 				BlockPos randBlockPos = pos.add(random.nextInt(3) - 1, random.nextInt(5) - 3, random.nextInt(3) - 1);
