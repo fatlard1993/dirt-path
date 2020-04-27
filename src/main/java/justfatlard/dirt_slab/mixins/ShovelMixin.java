@@ -7,6 +7,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.SlabBlock;
@@ -32,99 +33,90 @@ public class ShovelMixin {
 		BlockPos pos = context.getBlockPos();
 
 		if(context.getSide() != Direction.DOWN && world.getBlockState(pos.up()).isAir()){
+			PlayerEntity player = context.getPlayer();
 			BlockState state = world.getBlockState(pos);
+			Block block = state.getBlock();
+			Boolean success = false;
+			BlockState newState = Blocks.GREEN_WOOL.getDefaultState();
+			SlabType slabType = block instanceof SlabBlock ? (SlabType)state.get(SlabBlock.TYPE) : SlabType.DOUBLE;
 
-			if(state.getBlock() == Blocks.DIRT){ // dirt to path
-				PlayerEntity player = context.getPlayer();
+			if(block == Blocks.DIRT){
+				newState = Blocks.GRASS_PATH.getDefaultState();
 
-				if(!world.isClient){
-					world.setBlockState(pos, Blocks.GRASS_PATH.getDefaultState());
-
-					if(player != null) context.getStack().damage(1, (LivingEntity)player, (Consumer<LivingEntity>)((playerEntity_1x) -> { (playerEntity_1x).sendToolBreakStatus(context.getHand()); }));
-				}
-
-				else world.playSound(player, pos, SoundEvents.ITEM_SHOVEL_FLATTEN, SoundCategory.BLOCKS, 1.0F, 1.0F);
-
-				info.setReturnValue(ActionResult.SUCCESS);
+				success = true;
 			}
 
-			else if(state.getBlock() == DirtSlabBlocks.GRASS_SLAB || state.getBlock() == DirtSlabBlocks.DIRT_SLAB){ // grass/dirt slab to path slab
-				PlayerEntity player = context.getPlayer();
+			else if(block == DirtSlabBlocks.GRASS_SLAB || block == DirtSlabBlocks.DIRT_SLAB){ // grass/dirt slab to path slab
+				newState = DirtSlabBlocks.GRASS_PATH_SLAB.getDefaultState().with(SlabBlock.TYPE, state.get(SlabBlock.TYPE)).with(SlabBlock.WATERLOGGED, state.get(SlabBlock.WATERLOGGED));
 
-				if(!world.isClient){
-					world.setBlockState(pos, DirtSlabBlocks.GRASS_PATH_SLAB.getDefaultState().with(SlabBlock.TYPE, state.get(SlabBlock.TYPE)).with(SlabBlock.WATERLOGGED, state.get(SlabBlock.WATERLOGGED)));
-
-					if(player != null) context.getStack().damage(1, (LivingEntity)player, (Consumer<LivingEntity>)((playerEntity_1x) -> { (playerEntity_1x).sendToolBreakStatus(context.getHand()); }));
-				}
-
-				else world.playSound(player, pos, SoundEvents.ITEM_SHOVEL_FLATTEN, SoundCategory.BLOCKS, 1.0F, 1.0F);
-
-				info.setReturnValue(ActionResult.SUCCESS);
+				success = true;
 			}
 
-			// doubles to singles
+			// doubles to singles (no grass/dirt due to above logic)
+			else if(block == Blocks.COARSE_DIRT || (block == DirtSlabBlocks.COARSE_DIRT_SLAB && slabType == SlabType.DOUBLE)){
+				newState = DirtSlabBlocks.COARSE_DIRT_SLAB.getDefaultState();
 
-			else if(state.getBlock() == Blocks.GRASS_PATH || (state.getBlock() == DirtSlabBlocks.GRASS_PATH_SLAB && (SlabType)state.get(SlabBlock.TYPE) == SlabType.DOUBLE)){
-				PlayerEntity player = context.getPlayer();
-
-				if(!world.isClient){
-					world.setBlockState(pos, DirtSlabBlocks.GRASS_PATH_SLAB.getDefaultState());
-
-					if(player != null) context.getStack().damage(1, (LivingEntity)player, (Consumer<LivingEntity>)((playerEntity_1x) -> { (playerEntity_1x).sendToolBreakStatus(context.getHand()); }));
-				}
-
-				else world.playSound(player, pos, SoundEvents.ITEM_SHOVEL_FLATTEN, SoundCategory.BLOCKS, 1.0F, 1.0F);
-
-				info.setReturnValue(ActionResult.SUCCESS);
+				success = true;
 			}
 
-			else if(state.getBlock() == Blocks.FARMLAND || (state.getBlock() == DirtSlabBlocks.FARMLAND_SLAB && (SlabType)state.get(SlabBlock.TYPE) == SlabType.DOUBLE)){
-				PlayerEntity player = context.getPlayer();
+			else if(block == Blocks.FARMLAND || (block == DirtSlabBlocks.FARMLAND_SLAB && slabType == SlabType.DOUBLE)){
+				newState = DirtSlabBlocks.FARMLAND_SLAB.getDefaultState();
 
-				if(!world.isClient){
-					world.setBlockState(pos, DirtSlabBlocks.FARMLAND_SLAB.getDefaultState());
-
-					if(player != null) context.getStack().damage(1, (LivingEntity)player, (Consumer<LivingEntity>)((playerEntity_1x) -> { (playerEntity_1x).sendToolBreakStatus(context.getHand()); }));
-				}
-
-				else world.playSound(player, pos, SoundEvents.ITEM_SHOVEL_FLATTEN, SoundCategory.BLOCKS, 1.0F, 1.0F);
-
-				info.setReturnValue(ActionResult.SUCCESS);
+				success = true;
 			}
 
-			else if(state.getBlock() == Blocks.COARSE_DIRT || (state.getBlock() == DirtSlabBlocks.COARSE_DIRT_SLAB && (SlabType)state.get(SlabBlock.TYPE) == SlabType.DOUBLE)){
-				PlayerEntity player = context.getPlayer();
+			else if(block == Blocks.GRASS_PATH || (block == DirtSlabBlocks.GRASS_PATH_SLAB && slabType == SlabType.DOUBLE)){
+				newState = DirtSlabBlocks.GRASS_PATH_SLAB.getDefaultState();
 
-				if(!world.isClient){
-					world.setBlockState(pos, DirtSlabBlocks.COARSE_DIRT_SLAB.getDefaultState());
-
-					if(player != null) context.getStack().damage(1, (LivingEntity)player, (Consumer<LivingEntity>)((playerEntity_1x) -> { (playerEntity_1x).sendToolBreakStatus(context.getHand()); }));
-				}
-
-				else world.playSound(player, pos, SoundEvents.ITEM_SHOVEL_FLATTEN, SoundCategory.BLOCKS, 1.0F, 1.0F);
-
-				info.setReturnValue(ActionResult.SUCCESS);
+				success = true;
 			}
 
-			else if(state.getBlock() == Blocks.PODZOL || (state.getBlock() == DirtSlabBlocks.PODZOL_SLAB && (SlabType)state.get(SlabBlock.TYPE) == SlabType.DOUBLE)){
-				PlayerEntity player = context.getPlayer();
+			else if(block == Blocks.MYCELIUM || (block == DirtSlabBlocks.MYCELIUM_SLAB && slabType == SlabType.DOUBLE)){
+				newState = DirtSlabBlocks.MYCELIUM_SLAB.getDefaultState();
 
-				if(!world.isClient){
-					world.setBlockState(pos, DirtSlabBlocks.PODZOL_SLAB.getDefaultState());
-
-					if(player != null) context.getStack().damage(1, (LivingEntity)player, (Consumer<LivingEntity>)((playerEntity_1x) -> { (playerEntity_1x).sendToolBreakStatus(context.getHand()); }));
-				}
-
-				else world.playSound(player, pos, SoundEvents.ITEM_SHOVEL_FLATTEN, SoundCategory.BLOCKS, 1.0F, 1.0F);
-
-				info.setReturnValue(ActionResult.SUCCESS);
+				success = true;
 			}
 
-			else if(state.getBlock() == Blocks.MYCELIUM || (state.getBlock() == DirtSlabBlocks.MYCELIUM_SLAB && (SlabType)state.get(SlabBlock.TYPE) == SlabType.DOUBLE)){
-				PlayerEntity player = context.getPlayer();
+			else if(block == Blocks.PODZOL || (block == DirtSlabBlocks.PODZOL_SLAB && slabType == SlabType.DOUBLE)){
+				newState = DirtSlabBlocks.PODZOL_SLAB.getDefaultState();
 
+				success = true;
+			}
+
+			// single swaps (no grass/dirt due to above logic)
+			// else if(block == DirtSlabBlocks.COARSE_DIRT_SLAB && slabType == SlabType.BOTTOM || slabType == SlabType.TOP){
+			// 	newState = DirtSlabBlocks.COARSE_DIRT_SLAB.getDefaultState().with(SlabBlock.TYPE, slabType == SlabType.BOTTOM ? SlabType.TOP : SlabType.BOTTOM).with(SlabBlock.WATERLOGGED, state.get(SlabBlock.WATERLOGGED));
+
+			// 	success = true;
+			// }
+
+			// else if(block == DirtSlabBlocks.FARMLAND_SLAB && slabType == SlabType.BOTTOM || slabType == SlabType.TOP){
+			// 	newState = DirtSlabBlocks.FARMLAND_SLAB.getDefaultState().with(SlabBlock.TYPE, slabType == SlabType.BOTTOM ? SlabType.TOP : SlabType.BOTTOM).with(SlabBlock.WATERLOGGED, state.get(SlabBlock.WATERLOGGED));
+
+			// 	success = true;
+			// }
+
+			// else if(block == DirtSlabBlocks.GRASS_PATH_SLAB && slabType == SlabType.BOTTOM || slabType == SlabType.TOP){
+			// 	newState = DirtSlabBlocks.GRASS_PATH_SLAB.getDefaultState().with(SlabBlock.TYPE, slabType == SlabType.BOTTOM ? SlabType.TOP : SlabType.BOTTOM).with(SlabBlock.WATERLOGGED, state.get(SlabBlock.WATERLOGGED));
+
+			// 	success = true;
+			// }
+
+			// else if(block == DirtSlabBlocks.MYCELIUM_SLAB && slabType == SlabType.BOTTOM || slabType == SlabType.TOP){
+			// 	newState = DirtSlabBlocks.MYCELIUM_SLAB.getDefaultState().with(SlabBlock.TYPE, slabType == SlabType.BOTTOM ? SlabType.TOP : SlabType.BOTTOM).with(SlabBlock.WATERLOGGED, state.get(SlabBlock.WATERLOGGED));
+
+			// 	success = true;
+			// }
+
+			// else if(block == DirtSlabBlocks.PODZOL_SLAB && slabType == SlabType.BOTTOM || slabType == SlabType.TOP){
+			// 	newState = DirtSlabBlocks.PODZOL_SLAB.getDefaultState().with(SlabBlock.TYPE, slabType == SlabType.BOTTOM ? SlabType.TOP : SlabType.BOTTOM).with(SlabBlock.WATERLOGGED, state.get(SlabBlock.WATERLOGGED));
+
+			// 	success = true;
+			// }
+
+			if(success){
 				if(!world.isClient){
-					world.setBlockState(pos, DirtSlabBlocks.MYCELIUM_SLAB.getDefaultState());
+					world.setBlockState(pos, newState);
 
 					if(player != null) context.getStack().damage(1, (LivingEntity)player, (Consumer<LivingEntity>)((playerEntity_1x) -> { (playerEntity_1x).sendToolBreakStatus(context.getHand()); }));
 				}
