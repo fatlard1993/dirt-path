@@ -10,6 +10,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.SlabBlock;
+import net.minecraft.block.enums.SlabType;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.item.ItemStack;
@@ -50,7 +51,23 @@ public class Main implements ModInitializer, ClientModInitializer {
 		BlockRenderLayerMap.INSTANCE.putBlock(DirtSlabBlocks.GRASS_SLAB, RenderLayer.getCutoutMipped());
 	}
 
-	public static void setToDirt(BlockState state, World world, BlockPos pos){
+	public static boolean hasTopSlab(BlockState state){
+		Block block = state.getBlock();
+
+		return (block instanceof SlabBlock) && (state.get(SlabBlock.TYPE) == SlabType.TOP || state.get(SlabBlock.TYPE) == SlabType.DOUBLE);
+	}
+
+	public static boolean isDirtType(Block block){
+		return block == DirtSlabBlocks.COARSE_DIRT_SLAB || block == DirtSlabBlocks.DIRT_SLAB || block == DirtSlabBlocks.FARMLAND_SLAB || block == DirtSlabBlocks.PODZOL_SLAB;
+	}
+
+	public static boolean isGrassType(Block block){
+		return block == DirtSlabBlocks.GRASS_SLAB || block == DirtSlabBlocks.MYCELIUM_SLAB || isDirtType(block);
+	}
+
+	public static void setToDirt(World world, BlockPos pos){
+		BlockState state = world.getBlockState(pos);
+
 		world.setBlockState(pos, Block.pushEntitiesUpBeforeBlockChange(state, DirtSlabBlocks.DIRT_SLAB.getDefaultState().with(SlabBlock.TYPE, state.get(SlabBlock.TYPE)).with(SlabBlock.WATERLOGGED, state.get(SlabBlock.WATERLOGGED)), world, pos));
 	}
 
