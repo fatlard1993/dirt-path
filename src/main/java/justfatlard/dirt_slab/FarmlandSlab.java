@@ -44,8 +44,6 @@ public class FarmlandSlab extends SlicedTopSlab {
 	public void scheduledTick(BlockState state, ServerWorld world, BlockPos pos, Random random){
 		if(!state.canPlaceAt(world, pos)) setToDirt(state, world, pos);
 
-		// else if(world.getBlockState(pos).get(WATERLOGGED) == true) setToDirt(state, world, pos);
-
 		else {
 			int moisture = (Integer)state.get(MOISTURE);
 
@@ -76,7 +74,7 @@ public class FarmlandSlab extends SlicedTopSlab {
 	}
 
 	private static boolean isWaterNearby(WorldView world, BlockPos pos){
-		// if(world.getBlockState(pos).get(WATERLOGGED) == true) return true;
+		if(world.getBlockState(pos).get(WATERLOGGED) == true) return true;
 
 		Iterator var2 = BlockPos.iterate(pos.add(-4, 0, -4), pos.add(4, 1, 4)).iterator();
 
@@ -92,9 +90,7 @@ public class FarmlandSlab extends SlicedTopSlab {
 		return true;
 	}
 
-	protected void appendProperties(StateManager.Builder<Block, BlockState> builder){
-		builder.add(MOISTURE, TYPE, WATERLOGGED);
-	}
+	protected void appendProperties(StateManager.Builder<Block, BlockState> builder){ builder.add(TYPE, WATERLOGGED, MOISTURE); }
 
 	static {
 		TYPE = Properties.SLAB_TYPE;
