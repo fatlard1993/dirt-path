@@ -10,7 +10,8 @@
     "MushroomPlantMixin",
     "PlantMixin",
 		"ShovelMixin",
-		"SpreadableBlockMixin"
+		"SpreadableBlockMixin",
+		"StemMixin"
   ],
   "injectors": { "defaultRequire": 1 }
 }
