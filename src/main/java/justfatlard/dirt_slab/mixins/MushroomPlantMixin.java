@@ -5,7 +5,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-import justfatlard.dirt_slab.Main;
+import justfatlard.dirt_slab.DirtSlabBlocks;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.MushroomPlantBlock;
@@ -21,6 +21,6 @@ public class MushroomPlantMixin {
 		BlockState state = view.getBlockState(pos.down());
 		Block block = state.getBlock();
 
-		if((block == Main.MYCELIUM_SLAB || block == Main.PODZOL_SLAB) && (state.get(SlabBlock.TYPE) == SlabType.TOP || state.get(SlabBlock.TYPE) == SlabType.DOUBLE)) info.setReturnValue(true);
+		if((block == DirtSlabBlocks.MYCELIUM_SLAB || block == DirtSlabBlocks.PODZOL_SLAB) && (state.get(SlabBlock.TYPE) == SlabType.TOP || state.get(SlabBlock.TYPE) == SlabType.DOUBLE)) info.setReturnValue(true);
 	}
 }

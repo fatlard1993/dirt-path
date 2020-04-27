@@ -7,7 +7,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-import justfatlard.dirt_slab.Main;
+import justfatlard.dirt_slab.DirtSlabBlocks;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.SlabBlock;
 import net.minecraft.entity.LivingEntity;
@@ -31,11 +31,11 @@ public class HoeMixin {
 		if(context.getSide() != Direction.DOWN && world.getBlockState(pos.up()).isAir()){
 			BlockState state = world.getBlockState(pos);
 
-			if(state.getBlock() == Main.COARSE_DIRT_SLAB){ // Coarse dirt slab to dirt slab
+			if(state.getBlock() == DirtSlabBlocks.COARSE_DIRT_SLAB){ // Coarse dirt slab to dirt slab
 				PlayerEntity player = context.getPlayer();
 
 				if(!world.isClient){
-					world.setBlockState(pos, Main.DIRT_SLAB.getDefaultState().with(SlabBlock.TYPE, state.get(SlabBlock.TYPE)).with(SlabBlock.WATERLOGGED, state.get(SlabBlock.WATERLOGGED)));
+					world.setBlockState(pos, DirtSlabBlocks.DIRT_SLAB.getDefaultState().with(SlabBlock.TYPE, state.get(SlabBlock.TYPE)).with(SlabBlock.WATERLOGGED, state.get(SlabBlock.WATERLOGGED)));
 
 					if(player != null) context.getStack().damage(1, (LivingEntity)player, (Consumer<LivingEntity>)((playerEntity_1x) -> { (playerEntity_1x).sendToolBreakStatus(context.getHand()); }));
 				}
@@ -45,11 +45,11 @@ public class HoeMixin {
 				info.setReturnValue(ActionResult.SUCCESS);
 			}
 
-			else if(state.getBlock() == Main.DIRT_SLAB || state.getBlock() == Main.GRASS_SLAB || state.getBlock() == Main.GRASS_PATH_SLAB){
+			else if(state.getBlock() == DirtSlabBlocks.DIRT_SLAB || state.getBlock() == DirtSlabBlocks.GRASS_SLAB || state.getBlock() == DirtSlabBlocks.GRASS_PATH_SLAB){
 				PlayerEntity player = context.getPlayer();
 
 				if(!world.isClient){
-					world.setBlockState(pos, Main.FARMLAND_SLAB.getDefaultState().with(SlabBlock.TYPE, state.get(SlabBlock.TYPE)).with(SlabBlock.WATERLOGGED, state.get(SlabBlock.WATERLOGGED)));
+					world.setBlockState(pos, DirtSlabBlocks.FARMLAND_SLAB.getDefaultState().with(SlabBlock.TYPE, state.get(SlabBlock.TYPE)).with(SlabBlock.WATERLOGGED, state.get(SlabBlock.WATERLOGGED)));
 
 					if(player != null) context.getStack().damage(1, (LivingEntity)player, (Consumer<LivingEntity>)((playerEntity_1x) -> { (playerEntity_1x).sendToolBreakStatus(context.getHand()); }));
 				}

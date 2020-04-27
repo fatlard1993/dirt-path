@@ -22,7 +22,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
 
-import justfatlard.dirt_slab.Main;
+import justfatlard.dirt_slab.DirtSlabBlocks;
 
 @Mixin(ShovelItem.class)
 public class ShovelMixin {
@@ -48,11 +48,11 @@ public class ShovelMixin {
 				info.setReturnValue(ActionResult.SUCCESS);
 			}
 
-			else if(state.getBlock() == Main.GRASS_SLAB || state.getBlock() == Main.DIRT_SLAB){ // grass/dirt slab to path slab
+			else if(state.getBlock() == DirtSlabBlocks.GRASS_SLAB || state.getBlock() == DirtSlabBlocks.DIRT_SLAB){ // grass/dirt slab to path slab
 				PlayerEntity player = context.getPlayer();
 
 				if(!world.isClient){
-					world.setBlockState(pos, Main.GRASS_PATH_SLAB.getDefaultState().with(SlabBlock.TYPE, state.get(SlabBlock.TYPE)).with(SlabBlock.WATERLOGGED, state.get(SlabBlock.WATERLOGGED)));
+					world.setBlockState(pos, DirtSlabBlocks.GRASS_PATH_SLAB.getDefaultState().with(SlabBlock.TYPE, state.get(SlabBlock.TYPE)).with(SlabBlock.WATERLOGGED, state.get(SlabBlock.WATERLOGGED)));
 
 					if(player != null) context.getStack().damage(1, (LivingEntity)player, (Consumer<LivingEntity>)((playerEntity_1x) -> { (playerEntity_1x).sendToolBreakStatus(context.getHand()); }));
 				}
@@ -64,11 +64,11 @@ public class ShovelMixin {
 
 			// doubles to singles
 
-			else if(state.getBlock() == Blocks.GRASS_PATH || (state.getBlock() == Main.GRASS_PATH_SLAB && (SlabType)state.get(SlabBlock.TYPE) == SlabType.DOUBLE)){
+			else if(state.getBlock() == Blocks.GRASS_PATH || (state.getBlock() == DirtSlabBlocks.GRASS_PATH_SLAB && (SlabType)state.get(SlabBlock.TYPE) == SlabType.DOUBLE)){
 				PlayerEntity player = context.getPlayer();
 
 				if(!world.isClient){
-					world.setBlockState(pos, Main.GRASS_PATH_SLAB.getDefaultState());
+					world.setBlockState(pos, DirtSlabBlocks.GRASS_PATH_SLAB.getDefaultState());
 
 					if(player != null) context.getStack().damage(1, (LivingEntity)player, (Consumer<LivingEntity>)((playerEntity_1x) -> { (playerEntity_1x).sendToolBreakStatus(context.getHand()); }));
 				}
@@ -78,11 +78,11 @@ public class ShovelMixin {
 				info.setReturnValue(ActionResult.SUCCESS);
 			}
 
-			else if(state.getBlock() == Blocks.FARMLAND || (state.getBlock() == Main.FARMLAND_SLAB && (SlabType)state.get(SlabBlock.TYPE) == SlabType.DOUBLE)){
+			else if(state.getBlock() == Blocks.FARMLAND || (state.getBlock() == DirtSlabBlocks.FARMLAND_SLAB && (SlabType)state.get(SlabBlock.TYPE) == SlabType.DOUBLE)){
 				PlayerEntity player = context.getPlayer();
 
 				if(!world.isClient){
-					world.setBlockState(pos, Main.FARMLAND_SLAB.getDefaultState());
+					world.setBlockState(pos, DirtSlabBlocks.FARMLAND_SLAB.getDefaultState());
 
 					if(player != null) context.getStack().damage(1, (LivingEntity)player, (Consumer<LivingEntity>)((playerEntity_1x) -> { (playerEntity_1x).sendToolBreakStatus(context.getHand()); }));
 				}
@@ -92,11 +92,11 @@ public class ShovelMixin {
 				info.setReturnValue(ActionResult.SUCCESS);
 			}
 
-			else if(state.getBlock() == Blocks.COARSE_DIRT || (state.getBlock() == Main.COARSE_DIRT_SLAB && (SlabType)state.get(SlabBlock.TYPE) == SlabType.DOUBLE)){
+			else if(state.getBlock() == Blocks.COARSE_DIRT || (state.getBlock() == DirtSlabBlocks.COARSE_DIRT_SLAB && (SlabType)state.get(SlabBlock.TYPE) == SlabType.DOUBLE)){
 				PlayerEntity player = context.getPlayer();
 
 				if(!world.isClient){
-					world.setBlockState(pos, Main.COARSE_DIRT_SLAB.getDefaultState());
+					world.setBlockState(pos, DirtSlabBlocks.COARSE_DIRT_SLAB.getDefaultState());
 
 					if(player != null) context.getStack().damage(1, (LivingEntity)player, (Consumer<LivingEntity>)((playerEntity_1x) -> { (playerEntity_1x).sendToolBreakStatus(context.getHand()); }));
 				}
@@ -106,11 +106,11 @@ public class ShovelMixin {
 				info.setReturnValue(ActionResult.SUCCESS);
 			}
 
-			else if(state.getBlock() == Blocks.PODZOL || (state.getBlock() == Main.PODZOL_SLAB && (SlabType)state.get(SlabBlock.TYPE) == SlabType.DOUBLE)){
+			else if(state.getBlock() == Blocks.PODZOL || (state.getBlock() == DirtSlabBlocks.PODZOL_SLAB && (SlabType)state.get(SlabBlock.TYPE) == SlabType.DOUBLE)){
 				PlayerEntity player = context.getPlayer();
 
 				if(!world.isClient){
-					world.setBlockState(pos, Main.PODZOL_SLAB.getDefaultState());
+					world.setBlockState(pos, DirtSlabBlocks.PODZOL_SLAB.getDefaultState());
 
 					if(player != null) context.getStack().damage(1, (LivingEntity)player, (Consumer<LivingEntity>)((playerEntity_1x) -> { (playerEntity_1x).sendToolBreakStatus(context.getHand()); }));
 				}
@@ -120,11 +120,11 @@ public class ShovelMixin {
 				info.setReturnValue(ActionResult.SUCCESS);
 			}
 
-			else if(state.getBlock() == Blocks.MYCELIUM || (state.getBlock() == Main.MYCELIUM_SLAB && (SlabType)state.get(SlabBlock.TYPE) == SlabType.DOUBLE)){
+			else if(state.getBlock() == Blocks.MYCELIUM || (state.getBlock() == DirtSlabBlocks.MYCELIUM_SLAB && (SlabType)state.get(SlabBlock.TYPE) == SlabType.DOUBLE)){
 				PlayerEntity player = context.getPlayer();
 
 				if(!world.isClient){
-					world.setBlockState(pos, Main.MYCELIUM_SLAB.getDefaultState());
+					world.setBlockState(pos, DirtSlabBlocks.MYCELIUM_SLAB.getDefaultState());
 
 					if(player != null) context.getStack().damage(1, (LivingEntity)player, (Consumer<LivingEntity>)((playerEntity_1x) -> { (playerEntity_1x).sendToolBreakStatus(context.getHand()); }));
 				}

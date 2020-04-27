@@ -13,7 +13,7 @@ import net.minecraft.block.enums.SlabType;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.BlockView;
 
-import justfatlard.dirt_slab.Main;
+import justfatlard.dirt_slab.DirtSlabBlocks;
 
 @Mixin(StemBlock.class)
 public class StemMixin {
@@ -21,6 +21,6 @@ public class StemMixin {
 	public void canPlantOnTop(BlockState state, BlockView view, BlockPos pos, CallbackInfoReturnable<Boolean> info){
 		Block block = state.getBlock();
 
-		if(block == Main.FARMLAND_SLAB && (state.get(SlabBlock.TYPE) == SlabType.TOP || state.get(SlabBlock.TYPE) == SlabType.DOUBLE)) info.setReturnValue(true);
+		if(block == DirtSlabBlocks.FARMLAND_SLAB && (state.get(SlabBlock.TYPE) == SlabType.TOP || state.get(SlabBlock.TYPE) == SlabType.DOUBLE)) info.setReturnValue(true);
 	}
 }

@@ -64,7 +64,7 @@ public class SlicedTopSlab extends SlabBlock {
 	public boolean canPlaceAtSide(BlockState world, BlockView view, BlockPos pos, BlockPlacementEnvironment env){ return false; }
 
 	public BlockState getPlacementState(ItemPlacementContext ctx){
-		return !this.getDefaultState().canPlaceAt(ctx.getWorld(), ctx.getBlockPos()) ? Block.pushEntitiesUpBeforeBlockChange(this.getDefaultState(), Main.DIRT_SLAB.getDefaultState(), ctx.getWorld(), ctx.getBlockPos()) : super.getPlacementState(ctx);
+		return !this.getDefaultState().canPlaceAt(ctx.getWorld(), ctx.getBlockPos()) ? Block.pushEntitiesUpBeforeBlockChange(this.getDefaultState(), DirtSlabBlocks.DIRT_SLAB.getDefaultState(), ctx.getWorld(), ctx.getBlockPos()) : super.getPlacementState(ctx);
 	}
 
 	public BlockState getStateForNeighborUpdate(BlockState state, Direction facing, BlockState neighborState, IWorld world, BlockPos pos, BlockPos neighborPos){
@@ -76,7 +76,7 @@ public class SlicedTopSlab extends SlabBlock {
 	public void scheduledTick(BlockState state, ServerWorld world, BlockPos pos, Random random){ setToDirt(state, world, pos); }
 
 	public static void setToDirt(BlockState state, World world, BlockPos pos){
-		world.setBlockState(pos, pushEntitiesUpBeforeBlockChange(state, Main.DIRT_SLAB.getDefaultState().with(SlabBlock.TYPE, state.get(SlabBlock.TYPE)).with(SlabBlock.WATERLOGGED, state.get(SlabBlock.WATERLOGGED)), world, pos));
+		world.setBlockState(pos, pushEntitiesUpBeforeBlockChange(state, DirtSlabBlocks.DIRT_SLAB.getDefaultState().with(SlabBlock.TYPE, state.get(SlabBlock.TYPE)).with(SlabBlock.WATERLOGGED, state.get(SlabBlock.WATERLOGGED)), world, pos));
 	}
 
 	static {
