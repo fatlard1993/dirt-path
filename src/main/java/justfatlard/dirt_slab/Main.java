@@ -4,6 +4,7 @@ import java.util.Random;
 
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.api.ModInitializer;
+import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
 import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -16,6 +17,7 @@ import net.minecraft.client.color.block.BlockColorProvider;
 import net.minecraft.client.color.item.ItemColorProvider;
 import net.minecraft.client.color.world.BiomeColors;
 import net.minecraft.client.color.world.GrassColors;
+import net.minecraft.client.render.RenderLayer;
 import net.minecraft.world.BlockRenderView;
 import net.minecraft.world.World;
 
@@ -44,6 +46,8 @@ public class Main implements ModInitializer, ClientModInitializer {
 				return GrassColors.getColor(0.5D, 1.0D);
 			}
 		}, DirtSlabBlocks.GRASS_SLAB);
+
+		BlockRenderLayerMap.INSTANCE.putBlock(DirtSlabBlocks.GRASS_SLAB, RenderLayer.getCutoutMipped());
 	}
 
 	public static void setToDirt(BlockState state, World world, BlockPos pos){
