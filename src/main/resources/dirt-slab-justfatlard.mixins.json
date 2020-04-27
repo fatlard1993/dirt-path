@@ -5,13 +5,17 @@
   "compatibilityLevel": "JAVA_8",
   "mixins": [],
   "client": [
+    "AbstractTreeFeatureMixin",
+    "AlterGroundtreeDecoratorMixin",
     "CropMixin",
+    "DeadBushMixin",
     "HoeMixin",
     "MushroomPlantMixin",
     "PlantMixin",
 		"ShovelMixin",
 		"SpreadableBlockMixin",
-		"StemMixin"
+		"StemMixin",
+		"SugarCaneMixin"
   ],
   "injectors": { "defaultRequire": 1 }
 }
