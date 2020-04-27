@@ -27,8 +27,13 @@ public class SlicedTopSlab extends SlabBlock {
 	protected static final VoxelShape BOTTOM_SHAPE;
 	protected static final VoxelShape DOUBLE_SHAPE;
 
-	protected SlicedTopSlab(Block.Settings settings) {
+	protected SlicedTopSlab(Block.Settings settings){
 		super(settings);
+	}
+
+	@Environment(EnvType.CLIENT)
+	public boolean hasInWallOverlay(BlockState state, BlockView view, BlockPos pos){
+		return true;
 	}
 
 	@Override
@@ -56,28 +61,19 @@ public class SlicedTopSlab extends SlabBlock {
 		return !blockState.getMaterial().isSolid() || blockState.getBlock() instanceof FenceGateBlock || blockState.getBlock() instanceof PistonExtensionBlock;
 	}
 
+	public boolean canPlaceAtSide(BlockState world, BlockView view, BlockPos pos, BlockPlacementEnvironment env){ return false; }
+
+	public BlockState getPlacementState(ItemPlacementContext ctx){
+		return !this.getDefaultState().canPlaceAt(ctx.getWorld(), ctx.getBlockPos()) ? Block.pushEntitiesUpBeforeBlockChange(this.getDefaultState(), Main.DIRT_SLAB.getDefaultState(), ctx.getWorld(), ctx.getBlockPos()) : super.getPlacementState(ctx);
+	}
+
 	public BlockState getStateForNeighborUpdate(BlockState state, Direction facing, BlockState neighborState, IWorld world, BlockPos pos, BlockPos neighborPos){
 		if(facing == Direction.UP && !state.canPlaceAt(world, pos)) world.getBlockTickScheduler().schedule(pos, this, 1);
 
 		return super.getStateForNeighborUpdate(state, facing, neighborState, world, pos, neighborPos);
 	}
 
-	public boolean canPlaceAtSide(BlockState world, BlockView view, BlockPos pos, BlockPlacementEnvironment env){
-		return false;
-	}
-
-	@Environment(EnvType.CLIENT)
-	public boolean hasInWallOverlay(BlockState state, BlockView view, BlockPos pos){
-		return true;
-	}
-
-	public BlockState getPlacementState(ItemPlacementContext ctx){
-		return !this.getDefaultState().canPlaceAt(ctx.getWorld(), ctx.getBlockPos()) ? Block.pushEntitiesUpBeforeBlockChange(this.getDefaultState(), Main.DIRT_SLAB.getDefaultState(), ctx.getWorld(), ctx.getBlockPos()) : super.getPlacementState(ctx);
-	}
-
-	public void scheduledTick(BlockState state, ServerWorld world, BlockPos pos, Random random){
-		setToDirt(state, world, pos);
-	}
+	public void scheduledTick(BlockState state, ServerWorld world, BlockPos pos, Random random){ setToDirt(state, world, pos); }
 
 	public static void setToDirt(BlockState state, World world, BlockPos pos){
 		world.setBlockState(pos, pushEntitiesUpBeforeBlockChange(state, Main.DIRT_SLAB.getDefaultState().with(SlabBlock.TYPE, state.get(SlabBlock.TYPE)).with(SlabBlock.WATERLOGGED, state.get(SlabBlock.WATERLOGGED)), world, pos));
