@@ -16,13 +16,3 @@
 1. Right-click hoe support
 1. Right-click w/ shovel: dirt to path
 1. Right-click w/ shovel: vanilla full block or double variant to single slab
-
-Possible future features:
-
-1. Grass
-1. Snow support
-1. Worldgen integration
-
-
-should get a slab back when converting from block to slab
-grass spreads to waterlogged slabs
