@@ -31,14 +31,14 @@ public class Main implements ModInitializer, ClientModInitializer {
 	public void onInitializeClient() {
 		ColorProviderRegistry.BLOCK.register(new BlockColorProvider(){
 			@Override
-			public int getColor(BlockState state, BlockRenderView world, BlockPos pos, int layer){
-				return world != null && pos != null ? BiomeColors.getGrassColor(world, pos) : GrassColors.getColor(0.5D, 1.0D);
+			public int getColor(BlockState state, BlockRenderView view, BlockPos pos, int tintIndex){
+				return view != null && pos != null ? BiomeColors.getGrassColor(view, pos) : GrassColors.getColor(0.5D, 1.0D);
 			}
 		}, DirtSlabBlocks.GRASS_SLAB);
 
 		ColorProviderRegistry.ITEM.register(new ItemColorProvider(){
 			@Override
-			public int getColor(ItemStack stack, int layer){
+			public int getColor(ItemStack stack, int tintIndex){
 				return GrassColors.getColor(0.5D, 1.0D);
 			}
 		}, DirtSlabBlocks.GRASS_SLAB);
