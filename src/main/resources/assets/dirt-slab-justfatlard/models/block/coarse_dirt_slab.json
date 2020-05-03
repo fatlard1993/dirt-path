@@ -1,7 +1,7 @@
 {
 	"parent": "block/slab",
 	"textures": {
-		"particle": "block/dirt",
+		"particle": "block/coarse_dirt",
 		"bottom": "block/coarse_dirt",
 		"top": "block/coarse_dirt",
 		"side": "block/coarse_dirt"
