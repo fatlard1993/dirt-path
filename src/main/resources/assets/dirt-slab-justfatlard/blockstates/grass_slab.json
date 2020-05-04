@@ -1,7 +1,10 @@
 {
 	"variants": {
-		"type=bottom": { "model": "dirt-slab-justfatlard:block/grass_slab" },
-		"type=top": { "model": "dirt-slab-justfatlard:block/grass_slab_top" },
-		"type=double": { "model": "block/grass_block" }
+		"snowy=false,type=bottom": { "model": "dirt-slab-justfatlard:block/grass_slab" },
+		"snowy=false,type=top": { "model": "dirt-slab-justfatlard:block/grass_slab_top" },
+		"snowy=false,type=double": { "model": "block/grass_block" },
+		"snowy=true,type=bottom": { "model": "dirt-slab-justfatlard:block/grass_slab_snow" },
+		"snowy=true,type=top": { "model": "dirt-slab-justfatlard:block/grass_slab_top_snow" },
+		"snowy=true,type=double": { "model": "block/grass_block_snow" }
 	}
 }

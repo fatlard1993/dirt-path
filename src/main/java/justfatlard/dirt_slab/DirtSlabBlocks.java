@@ -18,7 +18,7 @@ public class DirtSlabBlocks {
 	public static final Block DIRT_SLAB = new SlabBlock(FabricBlockSettings.copy(Blocks.DIRT).breakByTool(FabricToolTags.SHOVELS).build());
 	public static final Block FARMLAND_SLAB = new FarmlandSlab(FabricBlockSettings.copy(Blocks.FARMLAND).breakByTool(FabricToolTags.SHOVELS).build());
 	public static final Block GRASS_PATH_SLAB = new SlicedTopSlab(FabricBlockSettings.copy(Blocks.GRASS_PATH).breakByTool(FabricToolTags.SHOVELS).build());
-	public static final Block GRASS_SLAB = new SpreadableSlab(FabricBlockSettings.copy(Blocks.GRASS_BLOCK).breakByTool(FabricToolTags.SHOVELS).ticksRandomly().build(), Blocks.GRASS_BLOCK);
+	public static final Block GRASS_SLAB = new GrassSlab(FabricBlockSettings.copy(Blocks.GRASS_BLOCK).breakByTool(FabricToolTags.SHOVELS).ticksRandomly().build());
 	public static final Block MYCELIUM_SLAB = new SpreadableSlab(FabricBlockSettings.copy(Blocks.MYCELIUM).breakByTool(FabricToolTags.SHOVELS).build(), Blocks.MYCELIUM);
 	public static final Block PODZOL_SLAB = new SlabBlock(FabricBlockSettings.copy(Blocks.PODZOL).breakByTool(FabricToolTags.SHOVELS).build());
 
