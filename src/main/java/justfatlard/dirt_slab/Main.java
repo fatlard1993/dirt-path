@@ -68,11 +68,13 @@ public class Main implements ModInitializer, ClientModInitializer {
 	public static void setToDirt(World world, BlockPos pos){
 		BlockState state = world.getBlockState(pos);
 
-		world.setBlockState(pos, Block.pushEntitiesUpBeforeBlockChange(state, DirtSlabBlocks.DIRT_SLAB.getDefaultState().with(SlabBlock.TYPE, state.get(SlabBlock.TYPE)).with(SlabBlock.WATERLOGGED, state.get(SlabBlock.WATERLOGGED)), world, pos));
+		if(state.getBlock() instanceof SlabBlock)	world.setBlockState(pos, Block.pushEntitiesUpBeforeBlockChange(state, DirtSlabBlocks.DIRT_SLAB.getDefaultState().with(SlabBlock.TYPE, state.get(SlabBlock.TYPE)).with(SlabBlock.WATERLOGGED, state.get(SlabBlock.WATERLOGGED)), world, pos));
+
+		else  world.setBlockState(pos, Block.pushEntitiesUpBeforeBlockChange(state, Blocks.DIRT.getDefaultState(), world, pos));
 	}
 
-	public static void spreadableTick(BlockState spreader, ServerWorld world, BlockPos pos, Random random) {
-		if(world.getLightLevel(pos.up()) >= 9){
+	public static void spreadableTick(BlockState spreader, ServerWorld world, BlockPos pos, Random random){
+		if(SpreadableSlab.canSurvive(spreader, world, pos) && world.getLightLevel(pos.up()) >= 9){
 			for(int x = 0; x < 4; ++x){
 				BlockPos randBlockPos = pos.add(random.nextInt(3) - 1, random.nextInt(5) - 3, random.nextInt(3) - 1);
 				BlockState spreadee = world.getBlockState(randBlockPos);
