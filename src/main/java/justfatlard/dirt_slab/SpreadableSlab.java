@@ -15,6 +15,7 @@ import net.minecraft.world.World;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.BooleanProperty;
+import net.minecraft.state.property.EnumProperty;
 import net.minecraft.state.property.Properties;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.SnowBlock;
@@ -25,6 +26,8 @@ import net.minecraft.block.SlabBlock;
 
 public class SpreadableSlab extends SlabBlock {
 	public final Block baseBlock;
+	public static final EnumProperty<SlabType> TYPE;
+	public static final BooleanProperty WATERLOGGED;
 	public static final BooleanProperty SNOWY;
 
 	public SpreadableSlab(Settings settings, Block baseBlock){
@@ -32,7 +35,7 @@ public class SpreadableSlab extends SlabBlock {
 
 		this.baseBlock = baseBlock;
 
-		this.setDefaultState((BlockState)((BlockState)((BlockState)this.stateManager.getDefaultState().with(SlabBlock.TYPE, SlabType.BOTTOM)).with(SlabBlock.WATERLOGGED, false)).with(SNOWY, false));
+		this.setDefaultState((BlockState)((BlockState)((BlockState)this.stateManager.getDefaultState().with(TYPE, SlabType.BOTTOM)).with(WATERLOGGED, false)).with(SNOWY, false));
 	}
 
 	@Override
@@ -71,7 +74,7 @@ public class SpreadableSlab extends SlabBlock {
 	public BlockState getStateForNeighborUpdate(BlockState state, Direction facing, BlockState neighborState, IWorld world, BlockPos pos, BlockPos neighborPos){
 		if(facing == Direction.UP && !state.canPlaceAt(world, pos)) world.getBlockTickScheduler().schedule(pos, this, 1);
 
-		if(facing != Direction.UP) return super.getStateForNeighborUpdate(state, facing, neighborState, world, pos, neighborPos);
+		if(facing != Direction.UP && state.get(TYPE) != SlabType.BOTTOM) return super.getStateForNeighborUpdate(state, facing, neighborState, world, pos, neighborPos);
 
 		else {
 			Block neighborBlock = neighborState.getBlock();
@@ -86,9 +89,11 @@ public class SpreadableSlab extends SlabBlock {
 		return (BlockState)(!this.getDefaultState().canPlaceAt(ctx.getWorld(), ctx.getBlockPos()) ? pushEntitiesUpBeforeBlockChange(this.getDefaultState(), DirtSlabBlocks.DIRT_SLAB.getDefaultState(), ctx.getWorld(), ctx.getBlockPos()) : super.getPlacementState(ctx)).with(SNOWY, topBlock == Blocks.SNOW_BLOCK || topBlock == Blocks.SNOW);
 	}
 
-	protected void appendProperties(StateManager.Builder<Block, BlockState> builder){ builder.add(SNOWY); }
+	protected void appendProperties(StateManager.Builder<Block, BlockState> builder){ builder.add(TYPE, WATERLOGGED, SNOWY); }
 
 	static {
+		TYPE = Properties.SLAB_TYPE;
+		WATERLOGGED = Properties.WATERLOGGED;
 		SNOWY = Properties.SNOWY;
 	}
 }
