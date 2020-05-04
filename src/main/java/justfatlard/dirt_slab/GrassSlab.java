@@ -3,6 +3,7 @@ package justfatlard.dirt_slab;
 import java.util.Random;
 import java.util.List;
 
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.server.world.ServerWorld;
@@ -28,6 +29,10 @@ public class GrassSlab extends SpreadableSlab implements Fertilizable {
 	}
 
 	public void grow(ServerWorld world, Random random, BlockPos pos, BlockState state){
+		growAll(world, random, pos, state);
+	}
+
+	public static void growAll(ServerWorld world, Random random, BlockPos pos, BlockState state){
 		BlockPos blockPos = pos.up();
 		BlockState blockState = Blocks.GRASS.getDefaultState();
 
@@ -37,8 +42,9 @@ public class GrassSlab extends SpreadableSlab implements Fertilizable {
 
 			for(int j = 0; j < i / 16; ++j){
 				blockPos2 = blockPos2.add(random.nextInt(3) - 1, (random.nextInt(3) - 1) * random.nextInt(3) / 2, random.nextInt(3) - 1);
+				Block groundBlock = world.getBlockState(blockPos2.down()).getBlock();
 
-				if(world.getBlockState(blockPos2.down()).getBlock() != this || world.getBlockState(blockPos2).isFullCube(world, blockPos2)) continue label48;
+				if((groundBlock != DirtSlabBlocks.GRASS_SLAB && groundBlock != Blocks.GRASS_BLOCK) || world.getBlockState(blockPos2).isFullCube(world, blockPos2)) continue label48;
 			}
 
 			BlockState blockState2 = world.getBlockState(blockPos2);

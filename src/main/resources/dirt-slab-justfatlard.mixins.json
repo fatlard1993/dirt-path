@@ -9,6 +9,7 @@
     "AlterGroundtreeDecoratorMixin",
     "CropMixin",
     "DeadBushMixin",
+    "GrassBlockMixin",
     "HoeMixin",
     "MushroomPlantMixin",
     "PlantMixin",
