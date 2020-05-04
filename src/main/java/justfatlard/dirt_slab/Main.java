@@ -37,7 +37,9 @@ public class Main implements ModInitializer, ClientModInitializer {
 		ColorProviderRegistry.BLOCK.register(new BlockColorProvider(){
 			@Override
 			public int getColor(BlockState state, BlockRenderView view, BlockPos pos, int tintIndex){
-				return view != null && pos != null ? BiomeColors.getGrassColor(view, pos) : GrassColors.getColor(0.5D, 1.0D);
+				if(tintIndex == 1) return view != null && pos != null ? BiomeColors.getGrassColor(view, pos) : GrassColors.getColor(0.5D, 1.0D);
+
+				return -1;
 			}
 		}, DirtSlabBlocks.GRASS_SLAB);
 
