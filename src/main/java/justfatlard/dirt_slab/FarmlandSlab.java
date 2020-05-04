@@ -80,9 +80,7 @@ public class FarmlandSlab extends SlicedTopSlab {
 
 		BlockPos blockPos;
 		do {
-			if(!var2.hasNext()){
-				return false;
-			}
+			if(!var2.hasNext()) return false;
 
 			blockPos = (BlockPos)var2.next();
 		} while(!world.getFluidState(blockPos).matches(FluidTags.WATER));
