@@ -68,9 +68,9 @@ public class Main implements ModInitializer, ClientModInitializer {
 	public static void setToDirt(World world, BlockPos pos){
 		BlockState state = world.getBlockState(pos);
 
-		if(state.getBlock() instanceof SlabBlock)	world.setBlockState(pos, Block.pushEntitiesUpBeforeBlockChange(state, DirtSlabBlocks.DIRT_SLAB.getDefaultState().with(SlabBlock.TYPE, state.get(SlabBlock.TYPE)).with(SlabBlock.WATERLOGGED, state.get(SlabBlock.WATERLOGGED)), world, pos));
+		if(state.getBlock() instanceof SlabBlock)	world.setBlockState(pos, DirtSlabBlocks.DIRT_SLAB.getDefaultState().with(SlabBlock.TYPE, state.get(SlabBlock.TYPE)).with(SlabBlock.WATERLOGGED, state.get(SlabBlock.WATERLOGGED)));
 
-		else  world.setBlockState(pos, Block.pushEntitiesUpBeforeBlockChange(state, Blocks.DIRT.getDefaultState(), world, pos));
+		else world.setBlockState(pos, Blocks.DIRT.getDefaultState());
 	}
 
 	public static void spreadableTick(BlockState spreader, ServerWorld world, BlockPos pos, Random random){
