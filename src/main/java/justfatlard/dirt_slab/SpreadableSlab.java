@@ -1,5 +1,6 @@
 package justfatlard.dirt_slab;
 
+import java.util.Iterator;
 import java.util.Random;
 
 import net.fabricmc.api.EnvType;
@@ -46,41 +47,57 @@ public class SpreadableSlab extends SlabBlock {
 
 	@Override
 	public void scheduledTick(BlockState spreader, ServerWorld world, BlockPos pos, Random random){
-		// if(!canSurvive(spreader, world, pos)) Main.setToDirt(world, pos);
+		if(!canSurvive(spreader, world, pos)) Main.setToDirt(world, pos);
 
-		// else
-		Main.spreadableTick(spreader, world, pos, random);
+		else Main.spreadableTick(spreader, world, pos, random);
 	}
 
-	public static boolean canSurvive(BlockState state, WorldView view, BlockPos pos){
+	public static boolean canSurvive(BlockState state, WorldView world, BlockPos pos){
 		BlockPos posUp = pos.up();
-		BlockState topBlock = view.getBlockState(posUp);
+		BlockState topBlock = world.getBlockState(posUp);
 
-		if((state.getBlock() == DirtSlabBlocks.GRASS_SLAB || state.getBlock() == DirtSlabBlocks.MYCELIUM_SLAB) && (state.get(TYPE) == SlabType.BOTTOM) && state.get(WATERLOGGED)) return false;
+		if(topBlock.getBlock() == Blocks.SNOW && (Integer)topBlock.get(SnowBlock.LAYERS) == 1) return true;
 
-		else if(topBlock.getBlock() == Blocks.SNOW && (Integer)topBlock.get(SnowBlock.LAYERS) == 1) return true;
+		else if(state.getBlock() instanceof SpreadableSlab && !topBlock.getMaterial().isSolid() && state.get(TYPE) == SlabType.TOP) return true;//todo better fix.. this is bound to have repercussions
 
 		else {
-			int i = ChunkLightProvider.getRealisticOpacity(view, state, pos, topBlock, posUp, Direction.UP, topBlock.getOpacity(view, posUp));
+			int i = ChunkLightProvider.getRealisticOpacity(world, state, pos, topBlock, posUp, Direction.UP, topBlock.getOpacity(world, posUp));
 
-			return i < view.getMaxLightLevel();
+			return i < world.getMaxLightLevel();
 		}
 	}
 
-	public static boolean canSpread(BlockState state, WorldView view, BlockPos pos){
-		return canSurvive(state, view, pos) && !view.getFluidState(pos.up()).matches(FluidTags.WATER);
+	public static boolean canSpread(BlockState state, WorldView world, BlockPos pos){
+		return canSurvive(state, world, pos) && !world.getFluidState(pos.up()).matches(FluidTags.WATER) && !(state.getBlock() instanceof SpreadableSlab && state.get(WATERLOGGED) && state.get(TYPE) == SlabType.BOTTOM);
+	}
+
+	private static boolean isSnowNearby(WorldView world, BlockPos pos){
+		if(world.getBlockState(pos).get(WATERLOGGED)) return false;
+
+		Block topBlock = world.getBlockState(pos.up()).getBlock();
+
+		if(topBlock == Blocks.SNOW || topBlock == Blocks.SNOW_BLOCK) return true;
+
+		Iterator var2 = BlockPos.iterate(pos.add(-1, -1, -1), pos.add(1, 1, 1)).iterator();
+
+		Block block;
+		do {
+			if(!var2.hasNext()) return false;
+
+			block = world.getBlockState((BlockPos)var2.next()).getBlock();
+		} while(block != Blocks.SNOW && block != Blocks.SNOW_BLOCK);
+
+		return true;
 	}
 
 	public BlockState getStateForNeighborUpdate(BlockState state, Direction facing, BlockState neighborState, IWorld world, BlockPos pos, BlockPos neighborPos){
 		if(facing == Direction.UP && !state.canPlaceAt(world, pos)) world.getBlockTickScheduler().schedule(pos, this, 1);
 
-		if(facing != Direction.UP && state.get(TYPE) != SlabType.BOTTOM) return super.getStateForNeighborUpdate(state, facing, neighborState, world, pos, neighborPos);
+		state = super.getStateForNeighborUpdate(state, facing, neighborState, world, pos, neighborPos);
 
-		else {
-			Block neighborBlock = neighborState.getBlock();
+		Block neighborBlock = neighborState.getBlock();
 
-			return (BlockState)state.with(SNOWY, neighborBlock == Blocks.SNOW_BLOCK || neighborBlock == Blocks.SNOW);
-		}
+		return (BlockState)state.with(SNOWY, neighborBlock == Blocks.SNOW_BLOCK || neighborBlock == Blocks.SNOW || isSnowNearby(world, pos));
 	}
 
 	public BlockState getPlacementState(ItemPlacementContext ctx){
