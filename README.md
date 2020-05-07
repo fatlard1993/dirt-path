@@ -1,5 +1,7 @@
 # Dirt Slab
 
+[![CurseForge](http://cf.way2muchnoise.eu/full_380356_downloads.svg)](https://www.curseforge.com/minecraft/mc-mods/dirt-slab)
+
 ## Added Slab Blocks
 
 1. Dirt
