@@ -1,6 +1,7 @@
 # Dirt Slab
 
-[![CurseForge](http://cf.way2muchnoise.eu/dirt-slab.svg)](https://www.curseforge.com/minecraft/mc-mods/dirt-slab)
+[![CurseForge](http://cf.way2muchnoise.eu/full_dirt-slab_downloads.svg)](http://www.curseforge.com/minecraft/mc-mods/dirt-slab)
+[![CurseForge](http://cf.way2muchnoise.eu/versions/dirt-slab.svg)](http://www.curseforge.com/minecraft/mc-mods/dirt-slab)
 
 ## Added Slab Blocks
 
