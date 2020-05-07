@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    { "tag": "minecraft:leaves" },
+    { "item": "minecraft:grass_block" },
+    { "item": "minecraft:sand" },
+    { "item": "minecraft:coarse_dirt" }
+	],
+  "result": { "item": "minecraft:podzol", "count": 3 }
+}

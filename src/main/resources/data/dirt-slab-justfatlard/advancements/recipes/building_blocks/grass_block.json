@@ -6,5 +6,5 @@
       "conditions": { "items": [{ "item": "minecraft:grass" }] }
     }
   },
-  "rewards": { "recipes": ["dirt-slab-justfatlard:grass_block"] }
+  "rewards": { "recipes": ["minecraft:grass_block"] }
 }
