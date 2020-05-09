@@ -75,7 +75,7 @@ public class SlicedTopSlab extends SlabBlock {
 	public void scheduledTick(BlockState state, ServerWorld world, BlockPos pos, Random random){ Main.setToDirt(world, pos); }
 
 	static {
-		TOP_SHAPE = Block.createCuboidShape(0.0D, 7.0D, 0.0D, 16.0D, 15.0D, 16.0D);
+		TOP_SHAPE = Block.createCuboidShape(0.0D, 8.0D, 0.0D, 16.0D, 15.0D, 16.0D);
 		BOTTOM_SHAPE = Block.createCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 7.0D, 16.0D);
 		DOUBLE_SHAPE = Block.createCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 15.0D, 16.0D);
 	}
