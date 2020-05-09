@@ -7,7 +7,6 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-import justfatlard.dirt_slab.DirtSlabBlocks;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.SlabBlock;
 import net.minecraft.entity.LivingEntity;
@@ -21,16 +20,18 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
 
+import justfatlard.dirt_slab.DirtSlabBlocks;
+import justfatlard.dirt_slab.SlicedTopSlab;
+
 @Mixin(HoeItem.class)
 public class HoeMixin {
 	@Inject(at = @At("HEAD"), method = "useOnBlock", cancellable = true)
 	private void useOnBlock(ItemUsageContext context, CallbackInfoReturnable<ActionResult> info){
 		World world = context.getWorld();
 		BlockPos pos = context.getBlockPos();
+		BlockState state = world.getBlockState(pos);
 
-		if(context.getSide() != Direction.DOWN && world.getBlockState(pos.up()).isAir()){
-			BlockState state = world.getBlockState(pos);
-
+		if(context.getSide() != Direction.DOWN && SlicedTopSlab.canExistAt(state, world, pos)){
 			if(state.getBlock() == DirtSlabBlocks.COARSE_DIRT_SLAB){ // Coarse dirt slab to dirt slab
 				PlayerEntity player = context.getPlayer();
 

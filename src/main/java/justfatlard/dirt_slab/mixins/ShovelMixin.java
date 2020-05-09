@@ -24,6 +24,7 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
 
 import justfatlard.dirt_slab.DirtSlabBlocks;
+import justfatlard.dirt_slab.SlicedTopSlab;
 
 @Mixin(ShovelItem.class)
 public class ShovelMixin {
@@ -31,10 +32,10 @@ public class ShovelMixin {
 	private void useOnBlock(ItemUsageContext context, CallbackInfoReturnable<ActionResult> info){
 		World world = context.getWorld();
 		BlockPos pos = context.getBlockPos();
+		BlockState state = world.getBlockState(pos);
 
-		if(context.getSide() != Direction.DOWN && world.getBlockState(pos.up()).isAir()){
+		if(context.getSide() != Direction.DOWN && SlicedTopSlab.canExistAt(state, world, pos)){
 			PlayerEntity player = context.getPlayer();
-			BlockState state = world.getBlockState(pos);
 			Block block = state.getBlock();
 			Boolean success = false;
 			BlockState newState = Blocks.GREEN_WOOL.getDefaultState();

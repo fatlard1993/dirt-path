@@ -55,9 +55,13 @@ public class SlicedTopSlab extends SlabBlock {
 	}
 
 	public boolean canPlaceAt(BlockState state, WorldView world, BlockPos pos){
+		return canExistAt(state, world, pos);
+	}
+
+	public static boolean canExistAt(BlockState state, WorldView world, BlockPos pos){
 		BlockState upState = world.getBlockState(pos.up());
 
-		return (state.get(TYPE) == SlabType.BOTTOM || (upState.getBlock() instanceof SlabBlock && upState.get(TYPE) == SlabType.TOP) || !upState.getMaterial().isSolid() || upState.getBlock() instanceof FenceGateBlock || upState.getBlock() instanceof PistonExtensionBlock);
+		return ((state.getBlock() instanceof SlabBlock && state.get(TYPE) == SlabType.BOTTOM) || (upState.getBlock() instanceof SlabBlock && upState.get(TYPE) == SlabType.TOP) || !upState.getMaterial().isSolid() || upState.getBlock() instanceof FenceGateBlock || upState.getBlock() instanceof PistonExtensionBlock);
 	}
 
 	public boolean canPlaceAtSide(BlockState world, BlockView view, BlockPos pos, BlockPlacementEnvironment env){ return false; }
