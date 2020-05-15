@@ -36,9 +36,9 @@ A [Minecraft](minecraft.net) mod built on [Fabric](fabricmc.net).
 
 ## Other Mod Interactions
 
-[Mixed slab](https://www.curseforge.com/minecraft/mc-mods/mixed-slab) | Last tested with V0.4.0.0
+[Mixed slab](https://www.curseforge.com/minecraft/mc-mods/mixed-slab) | Last tested with V1.0.0.0
 
 - Grass slabs: Overlay isn't cutout (results in black dirt)
 - Path/farmland: Uses full block model (results in seeing through the world via the top slice)
-- A mixed slab containing a dirt-slab block doesn't use the correct sound
+- A mixed slab containing a dirt-slab block doesn't use the correct sound when breaking the block
 - The resulting blocks are simple display only (No other dirt-slab features apply to the mixed slab containing a dirt-slab block)
