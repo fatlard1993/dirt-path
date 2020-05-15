@@ -5,6 +5,7 @@
 
 A [Minecraft](minecraft.net) mod built on [Fabric](fabricmc.net).
 
+
 ## Added Slab Blocks
 
 - Dirt
@@ -14,6 +15,7 @@ A [Minecraft](minecraft.net) mod built on [Fabric](fabricmc.net).
 - Grass
 - Mycelium
 - Podzol
+
 
 ## Other features
 
@@ -30,3 +32,12 @@ A [Minecraft](minecraft.net) mod built on [Fabric](fabricmc.net).
 - Melons can grow onto all top and double grass type slab blocks
 - Dead bushes, sugarcane, bamboo, mushrooms, flowers, and saplings can be placed on the appropriate top and double slab versions of the vanilla base blocks
 - Snow on top of or adjacent to a grass or mycelium slab will make it snowy
+
+
+## Other Mod Interactions
+
+- [Mixed slab](https://www.curseforge.com/minecraft/mc-mods/mixed-slab)
+	- Grass slabs: Overlay isn't cutout (results in black dirt)
+	- Path/farmland: Uses full block model (results in seeing through the world via the top slice)
+	- A mixed slab containing a dirt-slab block doesn't use the correct sound
+	- The resulting blocks are simple display only (No other dirt-slab features apply to the mixed slab containing a dirt-slab block)
