@@ -18,13 +18,15 @@ A [Minecraft](minecraft.net) mod built on [Fabric](fabricmc.net).
 ## Other features
 
 1. Grass, Podzol, and Mycelium block recipes
+1. Right-click w/ shovel: dirt slab/block to path slab/block
+1. Right-click w/ shovel: vanilla full block or double slab block to single slab
 1. Right-click w/ hoe: coarse dirt slab to dirt slab
 1. Right-click w/ hoe: dirt slab to farmland slab
-1. Right-click w/ shovel: dirt to path
-1. Right-click w/ shovel: vanilla full block or double variant to single slab
-1. Grass slabs are fertilizable with bonemeal just like grass blocks
-1. A growing giant pine will turn adjacent dirt/grass slabs into podzol slabs when it turns the surrounding dirt/grass blocks
+1. Grass slabs are fertilizable with bonemeal
+1. Grass and mycelium spreads and fertilizes across both blocks and slabs
+1. Sheep will eat grass off of grass slabs
+1. A growing giant pine will also turn adjacent dirt/grass slabs into podzol slabs
 1. Top and double farmland slabs can grow crops and melons
+1. Melons can grow onto all top and double grass type slab blocks
 1. Dead bushes, sugarcane, bamboo, mushrooms, flowers, and saplings can be placed on the appropriate top and double slab versions of the vanilla base blocks
-1. Grass and mycelium can spread and fertilize across both block and slab types
 1. Snow on top of or adjacent to a grass or mycelium slab will make it snowy
