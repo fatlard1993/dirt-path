@@ -36,7 +36,7 @@ A [Minecraft](minecraft.net) mod built on [Fabric](fabricmc.net).
 
 ## Other Mod Interactions
 
-[Mixed slab](https://www.curseforge.com/minecraft/mc-mods/mixed-slab)
+[Mixed slab](https://www.curseforge.com/minecraft/mc-mods/mixed-slab) | Last tested with V0.4.0.0
 
 - Grass slabs: Overlay isn't cutout (results in black dirt)
 - Path/farmland: Uses full block model (results in seeing through the world via the top slice)
