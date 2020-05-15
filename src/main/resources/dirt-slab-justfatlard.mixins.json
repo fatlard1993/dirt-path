@@ -3,12 +3,14 @@
 	"package": "justfatlard.dirt_slab.mixins",
   "minVersion": "0.8",
   "compatibilityLevel": "JAVA_8",
-  "mixins": [],
-  "client": [
+  "mixins": [
     "AbstractTreeFeatureMixin",
-    "AlterGroundtreeDecoratorMixin",
+		"AlterGroundTreeDecoratorMixin",
+		"BambooMixin",
+		"BambooSaplingMixin",
     "CropMixin",
-    "DeadBushMixin",
+		"DeadBushMixin",
+		"EatGrassGoalMixin",
     "GrassBlockMixin",
     "HoeMixin",
     "MushroomPlantMixin",
