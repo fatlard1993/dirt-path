@@ -24,6 +24,7 @@ A [Minecraft](minecraft.net) mod built on [Fabric](fabricmc.net).
 - Right-click w/ shovel: vanilla full block or double slab block to single slab
 - Right-click w/ hoe: coarse dirt slab to dirt slab
 - Right-click w/ hoe: dirt slab to farmland slab
+- Right-click w/ hoe: farmland slab/block to dirt slab/block
 - Grass slabs are fertilizable with bonemeal
 - Grass and mycelium spreads and fertilizes across both blocks and slabs
 - Sheep will eat grass off of grass slabs

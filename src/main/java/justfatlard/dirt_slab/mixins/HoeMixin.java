@@ -8,6 +8,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
 import net.minecraft.block.SlabBlock;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -32,7 +33,8 @@ public class HoeMixin {
 		BlockState state = world.getBlockState(pos);
 
 		if(context.getSide() != Direction.DOWN && SlicedTopSlab.canExistAt(state, world, pos)){
-			if(state.getBlock() == DirtSlabBlocks.COARSE_DIRT_SLAB){ // Coarse dirt slab to dirt slab
+			// Coarse dirt/farmland slab to dirt slab
+			if(state.getBlock() == DirtSlabBlocks.COARSE_DIRT_SLAB || state.getBlock() == DirtSlabBlocks.FARMLAND_SLAB){
 				PlayerEntity player = context.getPlayer();
 
 				if(!world.isClient){
@@ -46,6 +48,22 @@ public class HoeMixin {
 				info.setReturnValue(ActionResult.SUCCESS);
 			}
 
+			// Farmland to dirt
+			else if(state.getBlock() == Blocks.FARMLAND){
+				PlayerEntity player = context.getPlayer();
+
+				if(!world.isClient){
+					world.setBlockState(pos, DirtSlabBlocks.DIRT_SLAB.getDefaultState().with(SlabBlock.TYPE, state.get(SlabBlock.TYPE)).with(SlabBlock.WATERLOGGED, state.get(SlabBlock.WATERLOGGED)));
+
+					if(player != null) context.getStack().damage(1, (LivingEntity)player, (Consumer<LivingEntity>)((playerEntity_1x) -> { (playerEntity_1x).sendToolBreakStatus(context.getHand()); }));
+				}
+
+				else 	world.playSound(player, pos, SoundEvents.BLOCK_GRASS_BREAK, SoundCategory.BLOCKS, 1.0F, 1.0F);
+
+				info.setReturnValue(ActionResult.SUCCESS);
+			}
+
+			// Dirt/grass/path slab to farmland slab
 			else if(state.getBlock() == DirtSlabBlocks.DIRT_SLAB || state.getBlock() == DirtSlabBlocks.GRASS_SLAB || state.getBlock() == DirtSlabBlocks.GRASS_PATH_SLAB){
 				PlayerEntity player = context.getPlayer();
 
