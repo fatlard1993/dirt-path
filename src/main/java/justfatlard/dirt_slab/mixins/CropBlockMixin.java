@@ -15,7 +15,7 @@ import justfatlard.dirt_slab.DirtSlabBlocks;
 import justfatlard.dirt_slab.Main;
 
 @Mixin(CropBlock.class)
-public class CropMixin {
+public class CropBlockMixin {
 	@Inject(at = @At("TAIL"), method = "canPlantOnTop", cancellable = true)
 	public void canPlantOnTop(BlockState state, BlockView view, BlockPos pos, CallbackInfoReturnable<Boolean> info){
 		Block block = state.getBlock();
