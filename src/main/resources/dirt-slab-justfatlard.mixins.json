@@ -2,7 +2,8 @@
   "required": true,
 	"package": "justfatlard.dirt_slab.mixins",
   "minVersion": "0.8",
-  "compatibilityLevel": "JAVA_8",
+	"compatibilityLevel": "JAVA_8",
+  "injectors": { "defaultRequire": 1 },
   "mixins": [
     "AbstractTreeFeatureMixin",
 		"AlterGroundTreeDecoratorMixin",
@@ -19,6 +20,5 @@
 		"SpreadableBlockMixin",
 		"StemMixin",
 		"SugarCaneMixin"
-  ],
-  "injectors": { "defaultRequire": 1 }
+  ]
 }
