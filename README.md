@@ -20,10 +20,11 @@ A [Minecraft](minecraft.net) mod built on [Fabric](fabricmc.net).
 ## Other features
 
 - Grass, Podzol, and Mycelium block recipes
-- Right-click w/ shovel: dirt slab/block to path slab/block
-- Right-click w/ shovel: vanilla full block or double slab block to single slab
+- right-click w/ shovel: dirt slab/block to path slab/block
+- Sneak + right-click w/ shovel: vanilla full block or double slab block to single slab
+- Sneak + Right-click w/ shovel: single slab top to bottom and bottom to top toggle
 - Right-click w/ hoe: coarse dirt slab to dirt slab
-- Right-click w/ hoe: dirt slab to farmland slab
+- Right-click w/ hoe: dirt/path slab to farmland slab
 - Right-click w/ hoe: farmland slab/block to dirt slab/block
 - Grass slabs are fertilizable with bonemeal
 - Grass and mycelium spreads and fertilizes across both blocks and slabs
@@ -33,6 +34,7 @@ A [Minecraft](minecraft.net) mod built on [Fabric](fabricmc.net).
 - Melons can grow onto all top and double grass type slab blocks
 - Dead bushes, sugarcane, bamboo, mushrooms, flowers, and saplings can be placed on the appropriate top and double slab versions of the vanilla base blocks
 - Snow on top of or adjacent to a grass or mycelium slab will make it snowy
+- Particles
 
 
 ## Other Mod Interactions
