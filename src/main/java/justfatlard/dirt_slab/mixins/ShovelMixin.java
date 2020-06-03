@@ -174,7 +174,7 @@ public class ShovelMixin {
 				if(!world.isClient){
 					world.setBlockState(pos, newState);
 
-					((ServerWorld) world).spawnParticles(ParticleTypes.MYCELIUM, pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, 1, 0.25, 0.02, 0.25, 0.15);
+					((ServerWorld) world).spawnParticles(ParticleTypes.MYCELIUM, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, 3, 0.25, 0.02, 0.25, 0.15);
 
 					if(player != null) context.getStack().damage(1, (LivingEntity)player, (Consumer<LivingEntity>)((playerEntity_1x) -> { (playerEntity_1x).sendToolBreakStatus(context.getHand()); }));
 				}
