@@ -9,16 +9,16 @@
 		"AlterGroundTreeDecoratorMixin",
 		"BambooMixin",
 		"BambooSaplingMixin",
-    "CropMixin",
+		"CropBlockMixin",
 		"DeadBushMixin",
 		"EatGrassGoalMixin",
+    "FarmlandBlockMixin",
     "GrassBlockMixin",
     "HoeMixin",
     "MushroomPlantMixin",
-    "PlantMixin",
 		"ShovelMixin",
 		"SpreadableBlockMixin",
-		"StemMixin",
+		"StemBlockMixin",
 		"SugarCaneMixin"
   ]
 }
