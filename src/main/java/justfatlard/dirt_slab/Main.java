@@ -14,6 +14,7 @@ import net.minecraft.block.enums.SlabType;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.item.ItemStack;
+import net.minecraft.particle.ParticleTypes;
 import net.minecraft.client.color.block.BlockColorProvider;
 import net.minecraft.client.color.item.ItemColorProvider;
 import net.minecraft.client.color.world.BiomeColors;
@@ -67,12 +68,18 @@ public class Main implements ModInitializer, ClientModInitializer {
 		return block == DirtSlabBlocks.GRASS_SLAB || block == DirtSlabBlocks.MYCELIUM_SLAB || isDirtType(block);
 	}
 
+	public static void dirtParticles(World world, BlockPos pos, int count){
+		if(!world.isClient) ((ServerWorld) world).spawnParticles(ParticleTypes.MYCELIUM, pos.getX() + 0.5, pos.getY() + 1, pos.getZ() + 0.5, count, 0.25, 0.02, 0.25, 0.1);
+	}
+
 	public static void setToDirt(World world, BlockPos pos){
 		BlockState state = world.getBlockState(pos);
 
 		if(state.getBlock() instanceof SlabBlock)	world.setBlockState(pos, DirtSlabBlocks.DIRT_SLAB.getDefaultState().with(SlabBlock.TYPE, state.get(SlabBlock.TYPE)).with(SlabBlock.WATERLOGGED, state.get(SlabBlock.WATERLOGGED)));
 
 		else world.setBlockState(pos, Blocks.DIRT.getDefaultState());
+
+		dirtParticles(world, pos, 3);
 	}
 
 	public static void spreadableTick(BlockState spreader, ServerWorld world, BlockPos pos, Random random){

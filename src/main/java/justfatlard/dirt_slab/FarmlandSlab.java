@@ -23,6 +23,7 @@ import net.minecraft.block.enums.SlabType;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.world.ServerWorld;
 
 public class FarmlandSlab extends SlicedTopSlab {
@@ -48,12 +49,18 @@ public class FarmlandSlab extends SlicedTopSlab {
 			int moisture = (Integer)state.get(MOISTURE);
 
 			if(!isWaterNearby(world, pos) && !world.hasRain(pos.up())){
-				if(moisture > 0) world.setBlockState(pos, (BlockState)state.with(TYPE, state.get(TYPE)).with(WATERLOGGED, state.get(WATERLOGGED)).with(MOISTURE, moisture - 1), 2);
+				if(moisture > 0){
+					Main.dirtParticles(world, pos, 1);
+
+					world.setBlockState(pos, (BlockState)state.with(TYPE, state.get(TYPE)).with(WATERLOGGED, state.get(WATERLOGGED)).with(MOISTURE, moisture - 1), 2);
+				}
 
 				else if(!hasCrop(world, pos)) Main.setToDirt(world, pos);
 			}
 
 			else if(moisture < 7){
+				world.spawnParticles(ParticleTypes.SPLASH, pos.getX() + 0.5, pos.getY() + 1, pos.getZ() + 0.5, 3, 0.25, 0.06, 0.25, 0.1);
+
 				world.setBlockState(pos, (BlockState)state.with(TYPE, state.get(TYPE)).with(WATERLOGGED, state.get(WATERLOGGED)).with(MOISTURE, 7), 2);
 			}
 		}
