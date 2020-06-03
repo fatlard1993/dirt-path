@@ -17,12 +17,11 @@ import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.BlockView;
-
 import justfatlard.dirt_slab.DirtSlabBlocks;
 import justfatlard.dirt_slab.Main;
 
 @Mixin(StemBlock.class)
-public class StemMixin {
+public class StemBlockMixin {
 	@Inject(at = @At("TAIL"), method = "canPlantOnTop", cancellable = true)
 	public void canPlantOnTop(BlockState state, BlockView view, BlockPos pos, CallbackInfoReturnable<Boolean> info){
 		Block block = state.getBlock();
@@ -39,6 +38,13 @@ public class StemMixin {
 
 			world.setBlockState(placementPos, stem.getGourdBlock().getDefaultState());
 			world.setBlockState(stemPos, stem.getGourdBlock().getAttachedStem().getDefaultState().with(HorizontalFacingBlock.FACING, direction));
+
+			Main.happyParticles(world, placementPos.up(), 7);
 		}
+	}
+
+	@Inject(method = "grow", at = @At("HEAD"))
+	private void grow(ServerWorld world, Random random, BlockPos pos, BlockState state, CallbackInfo callbackInfo){
+		if(!world.isClient) Main.happyParticles(world, pos, 5);
 	}
 }
