@@ -13,6 +13,7 @@ import net.minecraft.block.SlabBlock;
 import net.minecraft.block.enums.SlabType;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.client.color.block.BlockColorProvider;
@@ -69,7 +70,19 @@ public class Main implements ModInitializer, ClientModInitializer {
 	}
 
 	public static void dirtParticles(World world, BlockPos pos, int count){
-		if(!world.isClient) ((ServerWorld) world).spawnParticles(ParticleTypes.MYCELIUM, pos.getX() + 0.5, pos.getY() + 1, pos.getZ() + 0.5, count, 0.25, 0.02, 0.25, 0.1);
+		if(!world.isClient) ((ServerWorld) world).spawnParticles(ParticleTypes.MYCELIUM, pos.getX() + 0.5, pos.getY() + 1, pos.getZ() + 0.5, MathHelper.nextInt(world.random, 1, count), 0.25, 0.02, 0.25, 0.1);
+	}
+
+	public static void waterParticles(World world, BlockPos pos, int count){
+		if(!world.isClient) ((ServerWorld) world).spawnParticles(ParticleTypes.SPLASH, pos.getX() + 0.5, pos.getY() + 1, pos.getZ() + 0.5, MathHelper.nextInt(world.random, 1, count), 0.25, 0.02, 0.25, 0.1);
+	}
+
+	public static void happyParticles(World world, BlockPos pos, int count){
+		if(!world.isClient) ((ServerWorld) world).spawnParticles(ParticleTypes.HAPPY_VILLAGER, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, MathHelper.nextInt(world.random, 1, count), 0.25, 0.02, 0.25, 0.1);
+	}
+
+	public static void sadParticles(World world, BlockPos pos, int count){
+		if(!world.isClient) ((ServerWorld) world).spawnParticles(ParticleTypes.ANGRY_VILLAGER, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, MathHelper.nextInt(world.random, 1, count), 0.25, 0.02, 0.25, 0.1);
 	}
 
 	public static void setToDirt(World world, BlockPos pos){
