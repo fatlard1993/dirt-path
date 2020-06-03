@@ -1,12 +1,18 @@
 package justfatlard.dirt_slab.mixins;
 
+import java.util.Map;
 import java.util.function.Consumer;
 
+import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Mutable;
+import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.SlabBlock;
@@ -22,58 +28,61 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
 
 import justfatlard.dirt_slab.DirtSlabBlocks;
+import justfatlard.dirt_slab.Main;
 import justfatlard.dirt_slab.SlicedTopSlab;
 
 @Mixin(HoeItem.class)
 public class HoeMixin {
+	@Shadow
+	@Final
+	@Mutable
+	private static Map<Block, BlockState> TILLED_BLOCKS;
+
+	static {
+		TILLED_BLOCKS.put(Blocks.FARMLAND, Blocks.DIRT.getDefaultState());
+	}
+
+	@Inject(method = "useOnBlock", locals = LocalCapture.CAPTURE_FAILHARD, at = @At(value = "INVOKE_ASSIGN", target = "net/minecraft/world/World.setBlockState(Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/block/BlockState;I)Z"))
+	private void onTillBlock(ItemUsageContext context, CallbackInfoReturnable info, World world, BlockPos pos, BlockState state, PlayerEntity player){
+		if(state.getBlock() == Blocks.FARMLAND) world.getBlockTickScheduler().schedule(pos, state.getBlock(), 1);
+	}
+
 	@Inject(at = @At("HEAD"), method = "useOnBlock", cancellable = true)
 	private void useOnBlock(ItemUsageContext context, CallbackInfoReturnable<ActionResult> info){
-		World world = context.getWorld();
 		BlockPos pos = context.getBlockPos();
+		World world = context.getWorld();
 		BlockState state = world.getBlockState(pos);
 
 		if(context.getSide() != Direction.DOWN && SlicedTopSlab.canExistAt(state, world, pos)){
-			// Coarse dirt/farmland slab to dirt slab
-			if(state.getBlock() == DirtSlabBlocks.COARSE_DIRT_SLAB || state.getBlock() == DirtSlabBlocks.FARMLAND_SLAB){
-				PlayerEntity player = context.getPlayer();
+			PlayerEntity player = context.getPlayer();
+			Block block = state.getBlock();
+			Boolean success = false;
+			BlockState newState = Blocks.GREEN_WOOL.getDefaultState();
 
-				if(!world.isClient){
-					world.setBlockState(pos, DirtSlabBlocks.DIRT_SLAB.getDefaultState().with(SlabBlock.TYPE, state.get(SlabBlock.TYPE)).with(SlabBlock.WATERLOGGED, state.get(SlabBlock.WATERLOGGED)));
+			if(block == DirtSlabBlocks.COARSE_DIRT_SLAB || block == DirtSlabBlocks.FARMLAND_SLAB){
+				newState = DirtSlabBlocks.DIRT_SLAB.getDefaultState().with(SlabBlock.TYPE, state.get(SlabBlock.TYPE)).with(SlabBlock.WATERLOGGED, state.get(SlabBlock.WATERLOGGED));
 
-					if(player != null) context.getStack().damage(1, (LivingEntity)player, (Consumer<LivingEntity>)((playerEntity_1x) -> { (playerEntity_1x).sendToolBreakStatus(context.getHand()); }));
-				}
+				success = true;
 
-				else world.playSound(player, pos, SoundEvents.BLOCK_GRASS_BREAK, SoundCategory.BLOCKS, 1.0F, 1.0F);
-
-				info.setReturnValue(ActionResult.SUCCESS);
+				if(world.isClient) world.playSound(player, pos, SoundEvents.ITEM_SHOVEL_FLATTEN, SoundCategory.BLOCKS, 1.0F, 1.0F);
 			}
 
-			// Farmland to dirt
-			else if(state.getBlock() == Blocks.FARMLAND){
-				PlayerEntity player = context.getPlayer();
+			else if(block == DirtSlabBlocks.DIRT_SLAB || block == DirtSlabBlocks.GRASS_SLAB || block == DirtSlabBlocks.GRASS_PATH_SLAB){
+				newState = DirtSlabBlocks.FARMLAND_SLAB.getDefaultState().with(SlabBlock.TYPE, state.get(SlabBlock.TYPE)).with(SlabBlock.WATERLOGGED, state.get(SlabBlock.WATERLOGGED));
 
-				if(!world.isClient){
-					world.setBlockState(pos, DirtSlabBlocks.DIRT_SLAB.getDefaultState().with(SlabBlock.TYPE, state.get(SlabBlock.TYPE)).with(SlabBlock.WATERLOGGED, state.get(SlabBlock.WATERLOGGED)));
+				success = true;
 
-					if(player != null) context.getStack().damage(1, (LivingEntity)player, (Consumer<LivingEntity>)((playerEntity_1x) -> { (playerEntity_1x).sendToolBreakStatus(context.getHand()); }));
-				}
-
-				else world.playSound(player, pos, SoundEvents.BLOCK_GRASS_BREAK, SoundCategory.BLOCKS, 1.0F, 1.0F);
-
-				info.setReturnValue(ActionResult.SUCCESS);
+				if(world.isClient) world.playSound(player, pos, SoundEvents.BLOCK_GRASS_BREAK, SoundCategory.BLOCKS, 1.0F, 1.0F);
 			}
 
-			// Dirt/grass/path slab to farmland slab
-			else if(state.getBlock() == DirtSlabBlocks.DIRT_SLAB || state.getBlock() == DirtSlabBlocks.GRASS_SLAB || state.getBlock() == DirtSlabBlocks.GRASS_PATH_SLAB){
-				PlayerEntity player = context.getPlayer();
-
+			if(success){
 				if(!world.isClient){
-					world.setBlockState(pos, DirtSlabBlocks.FARMLAND_SLAB.getDefaultState().with(SlabBlock.TYPE, state.get(SlabBlock.TYPE)).with(SlabBlock.WATERLOGGED, state.get(SlabBlock.WATERLOGGED)));
+					world.setBlockState(pos, newState);
 
 					if(player != null) context.getStack().damage(1, (LivingEntity)player, (Consumer<LivingEntity>)((playerEntity_1x) -> { (playerEntity_1x).sendToolBreakStatus(context.getHand()); }));
 				}
 
-				else world.playSound(player, pos, SoundEvents.ITEM_HOE_TILL, SoundCategory.BLOCKS, 1.0F, 1.0F);
+				Main.dirtParticles(world, pos, 1);
 
 				info.setReturnValue(ActionResult.SUCCESS);
 			}
